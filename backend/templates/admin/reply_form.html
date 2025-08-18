@@ -1,0 +1,45 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_modify %}
+
+{% block title %}Reply to Contact Messages{% endblock %}
+
+{% block content %}
+<h1>Reply to Contact Messages</h1>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="form-row">
+        <div class="field-box">
+            <label for="id_subject">Subject:</label>
+            <input type="text" name="subject" id="id_subject" required>
+        </div>
+    </div>
+    
+    <div class="form-row">
+        <div class="field-box">
+            <label for="id_reply_message">Message:</label>
+            <textarea name="reply_message" id="id_reply_message" rows="10" cols="80" required></textarea>
+        </div>
+    </div>
+    
+    <div class="submit-row">
+        <input type="hidden" name="action" value="{{ action }}">
+        <input type="submit" name="apply" value="Send Replies" class="default">
+        <a href="{% url 'admin:orders_contact_changelist' %}" class="button cancel-link">Cancel</a>
+    </div>
+    
+    <!-- Include selected contact IDs -->
+    {% for contact in contacts %}
+        <input type="hidden" name="_selected_action" value="{{ contact.id }}">
+    {% endfor %}
+</form>
+
+<h2>Selected Messages to Reply to:</h2>
+<ul>
+{% for contact in contacts %}
+    <li><strong>{{ contact.name }}</strong> ({{ contact.email }}) - {{ contact.subject }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

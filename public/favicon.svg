@@ -1,0 +1,16 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Navy blue background -->
+  <rect width="32" height="32" fill="#1e3a8a"/>
+  
+  <!-- Logo elements -->
+  <g transform="translate(16, 13)">
+    <!-- Orange rounded rectangle -->
+    <rect x="-6" y="-2" width="10" height="2" rx="1" fill="#ea580c" transform="rotate(-20)"/>
+    
+    <!-- Yellow rounded rectangle -->
+    <rect x="-5" y="0" width="8" height="1.5" rx="0.75" fill="#eab308" transform="rotate(-10)"/>
+    
+    <!-- White rounded rectangle -->
+    <rect x="-3" y="2" width="4" height="1" rx="0.5" fill="#ffffff"/>
+  </g>
+</svg>

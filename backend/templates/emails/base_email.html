@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Funmitan Empire{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333333;
+            background-color: #f4f4f4;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+            padding: 30px;
+            text-align: center;
+        }
+        .logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+        .header h1 {
+            color: white;
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .content h2 {
+            color: #ea580c;
+            margin-top: 0;
+            font-size: 22px;
+        }
+        .highlight-box {
+            background-color: #f8fafc;
+            border-left: 4px solid #ea580c;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .button:hover {
+            background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+        }
+        .footer {
+            background-color: #1f2937;
+            padding: 30px;
+            text-align: center;
+            color: #9ca3af;
+        }
+        .footer h3 {
+            color: #ffffff;
+            margin-top: 0;
+            font-size: 18px;
+        }
+        .social-links {
+            margin: 20px 0;
+        }
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            color: #9ca3af;
+            text-decoration: none;
+            padding: 8px 12px;
+            border: 1px solid #374151;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .social-links a:hover {
+            color: #ffffff;
+            border-color: #ea580c;
+            background-color: #ea580c;
+        }
+        .contact-info {
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        .unsubscribe {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+        .unsubscribe a {
+            color: #ea580c;
+            text-decoration: none;
+        }
+        @media (max-width: 600px) {
+            .email-container {
+                width: 100% !important;
+            }
+            .content {
+                padding: 20px !important;
+            }
+            .header {
+                padding: 20px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🛍️ Funmitan Empire</h1>
+            <p style="color: rgba(255,255,255,0.9); margin: 0; font-size: 16px;">
+                {% block subtitle %}Premium Fashion & Quality Fabrics{% endblock %}
+            </p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <h3>Stay Connected</h3>
+            
+            <div class="social-links">
+                <a href="https://www.facebook.com/share/1AHGWcKrWq/" target="_blank">Facebook</a>
+                <a href="https://instagram.com/funmitan2022" target="_blank">Instagram</a>
+                <a href="https://tiktok.com/@funmitan2022" target="_blank">TikTok</a>
+            </div>
+
+            <div class="contact-info">
+                <p><strong>Funmitan Empire Limited</strong></p>
+                <p>📧 funmitanempire@gmail.com</p>
+                <p>📞 +447368369348</p>
+                <p>📍 Manchester, United Kingdom</p>
+            </div>
+
+            <div class="unsubscribe">
+                <p>
+                    Don't want to receive these emails? 
+                    <a href="{{ unsubscribe_url|default:'#' }}">Unsubscribe here</a>
+                </p>
+                <p style="margin-top: 15px; font-size: 11px; color: #6b7280;">
+                    © {% now "Y" %} Funmitan Empire Limited. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

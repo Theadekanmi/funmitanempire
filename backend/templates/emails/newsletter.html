@@ -1,0 +1,48 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}Funmitan Empire Newsletter{% endblock %}
+
+{% block subtitle %}Latest Fashion & Exclusive Offers{% endblock %}
+
+{% block content %}
+<h2>{{ newsletter_title|default:"Fashion Updates & Exclusive Offers" }} 💎</h2>
+
+<p>Hi {{ subscriber_name|default:"Fashion Lover" }},</p>
+
+<p>{{ newsletter_content|default:"Welcome to our latest newsletter! Discover the newest trends, exclusive offers, and premium quality fabrics that make Funmitan Empire your go-to fashion destination." }}</p>
+
+<div class="highlight-box">
+    <h3 style="margin-top: 0; color: #ea580c;">🔥 This Week's Highlights</h3>
+    <ul style="margin: 0; padding-left: 20px;">
+        <li><strong>New Arrivals:</strong> Premium cotton fabrics and luxury wear</li>
+        <li><strong>Member Exclusive:</strong> 15% off on all orders over £50</li>
+        <li><strong>Free Shipping:</strong> UK-wide delivery on orders above £50</li>
+        <li><strong>Limited Time:</strong> Special collection launching soon</li>
+    </ul>
+</div>
+
+<p style="text-align: center;">
+    <a href="{{ shop_url|default:'http://localhost:3000' }}" class="button">
+        Shop Now
+    </a>
+</p>
+
+<h3 style="color: #ea580c;">Why Choose Funmitan Empire?</h3>
+<ul>
+    <li>✨ <strong>Premium Quality:</strong> Hand-selected fabrics and materials</li>
+    <li>🚚 <strong>Fast Delivery:</strong> Quick and reliable shipping across the UK</li>
+    <li>💝 <strong>Customer Care:</strong> Dedicated support team</li>
+    <li>🔄 <strong>Easy Returns:</strong> Hassle-free return policy</li>
+</ul>
+
+<p style="background-color: #fef3c7; padding: 15px; border-radius: 6px; border-left: 4px solid #f59e0b;">
+    <strong>💡 Member Tip:</strong> Follow us on social media for daily style inspiration and flash sales announcements!
+</p>
+
+<p>Stay tuned for more exciting updates and exclusive offers!</p>
+
+<p>
+    <strong>The Funmitan Empire Team</strong><br>
+    <em>Bringing You the Best in Fashion</em>
+</p>
+{% endblock %}

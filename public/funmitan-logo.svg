@@ -1,0 +1,19 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Navy blue background -->
+  <rect width="200" height="200" fill="#1e3a8a"/>
+  
+  <!-- Logo elements -->
+  <g transform="translate(100, 80)">
+    <!-- Orange rounded rectangle -->
+    <rect x="-40" y="-15" width="60" height="12" rx="6" fill="#ea580c" transform="rotate(-20)"/>
+    
+    <!-- Yellow rounded rectangle -->
+    <rect x="-30" y="0" width="50" height="10" rx="5" fill="#eab308" transform="rotate(-10)"/>
+    
+    <!-- White rounded rectangle -->
+    <rect x="-20" y="15" width="25" height="8" rx="4" fill="#ffffff"/>
+  </g>
+  
+  <!-- Company name -->
+  <text x="100" y="140" text-anchor="middle" fill="#ea580c" font-family="serif" font-size="24" font-weight="bold">Funmitan Empire</text>
+</svg>

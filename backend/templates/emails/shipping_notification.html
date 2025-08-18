@@ -1,0 +1,84 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}Your Order Has Shipped! #{{ order.order_number }}{% endblock %}
+
+{% block subtitle %}On Its Way to You!{% endblock %}
+
+{% block content %}
+<h2>Your Order Has Shipped! 🚚✨</h2>
+
+<p>Hi {{ order.full_name }},</p>
+
+<p>Great news! Your order has been shipped and is on its way to you.</p>
+
+<div class="highlight-box">
+    <h3 style="margin-top: 0; color: #ea580c;">📦 Shipping Details</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+        <tr>
+            <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;"><strong>Order Number:</strong></td>
+            <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;">{{ order.order_number }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;"><strong>Tracking Number:</strong></td>
+            <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb; font-family: monospace; font-weight: bold;">{{ order.tracking_number }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;"><strong>Carrier:</strong></td>
+            <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;">{{ order.carrier }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;"><strong>Shipped Date:</strong></td>
+            <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;">{{ order.shipped_at|date:"F d, Y g:i A" }}</td>
+        </tr>
+        {% if order.estimated_delivery %}
+        <tr>
+            <td style="padding: 8px 0;"><strong>Estimated Delivery:</strong></td>
+            <td style="padding: 8px 0; color: #16a34a; font-weight: bold;">{{ order.estimated_delivery|date:"F d, Y" }}</td>
+        </tr>
+        {% endif %}
+    </table>
+</div>
+
+<p style="text-align: center;">
+    <a href="{{ track_url|default:'http://localhost:3000/track-order' }}" class="button">
+        Track Your Package
+    </a>
+</p>
+
+<div class="highlight-box">
+    <h3 style="margin-top: 0; color: #ea580c;">🏠 Shipping Address</h3>
+    <p style="margin: 0; line-height: 1.8;">
+        <strong>{{ order.full_name }}</strong><br>
+        {{ order.address }}<br>
+        {{ order.city }}, {{ order.postal_code }}<br>
+        {{ order.country }}
+    </p>
+</div>
+
+<h3 style="color: #ea580c;">Tracking Your Package</h3>
+<p>You can track your package using:</p>
+<ul>
+    <li><strong>Our website:</strong> Use order number {{ order.order_number }}</li>
+    <li><strong>{{ order.carrier }} website:</strong> Use tracking number {{ order.tracking_number }}</li>
+</ul>
+
+<p style="background-color: #f0f9ff; padding: 15px; border-radius: 6px; border-left: 4px solid #0ea5e9;">
+    <strong>📱 Pro Tip:</strong> Download the {{ order.carrier }} app for real-time tracking updates and delivery notifications!
+</p>
+
+<h3 style="color: #ea580c;">Expected Delivery Timeline</h3>
+<ul>
+    <li><strong>UK Mainland:</strong> 1-3 business days</li>
+    <li><strong>UK Highlands & Islands:</strong> 2-5 business days</li>
+    <li><strong>International:</strong> 5-10 business days</li>
+</ul>
+
+<p>We'll notify you once your package is delivered. If you have any questions about your shipment, please don't hesitate to contact us.</p>
+
+<p>Thank you for choosing Funmitan Empire!</p>
+
+<p>
+    <strong>The Funmitan Empire Team</strong><br>
+    <em>Quality Fashion, Delivered</em>
+</p>
+{% endblock %}

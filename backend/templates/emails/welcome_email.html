@@ -1,0 +1,36 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}Welcome to Funmitan Empire!{% endblock %}
+
+{% block subtitle %}Welcome to Premium Fashion{% endblock %}
+
+{% block content %}
+<h2>Welcome to Funmitan Empire, {{ user.first_name|default:user.username }}! 🎉</h2>
+
+<p>We're absolutely thrilled to have you join our fashion community! Thank you for creating your account with us.</p>
+
+<div class="highlight-box">
+    <h3 style="margin-top: 0; color: #ea580c;">What's Next?</h3>
+    <ul style="margin: 0; padding-left: 20px;">
+        <li><strong>Verify your email</strong> - Check your inbox for our verification email</li>
+        <li><strong>Explore our collections</strong> - Discover premium fabrics and fashion</li>
+        <li><strong>Enjoy exclusive offers</strong> - Get access to member-only deals</li>
+        <li><strong>Track your orders</strong> - Monitor your purchases in real-time</li>
+    </ul>
+</div>
+
+<p style="text-align: center;">
+    <a href="{{ shop_url|default:'http://localhost:3000' }}" class="button">
+        Start Shopping Now
+    </a>
+</p>
+
+<p>If you have any questions or need assistance, our customer service team is always here to help!</p>
+
+<p>Welcome aboard!</p>
+
+<p style="margin-bottom: 0;">
+    <strong>The Funmitan Empire Team</strong><br>
+    <em>Where Quality Meets Style</em>
+</p>
+{% endblock %}

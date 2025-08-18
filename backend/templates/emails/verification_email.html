@@ -1,0 +1,49 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}Verify Your Email - Funmitan Empire{% endblock %}
+
+{% block subtitle %}Email Verification Required{% endblock %}
+
+{% block content %}
+<h2>Please Verify Your Email Address 📧</h2>
+
+<p>Hi {{ user.first_name|default:user.username }},</p>
+
+<p>Thank you for registering with Funmitan Empire! To complete your account setup and start shopping, please verify your email address.</p>
+
+<div class="highlight-box">
+    <h3 style="margin-top: 0; color: #ea580c;">🔐 Secure Your Account</h3>
+    <p style="margin-bottom: 0;">
+        Email verification helps us ensure the security of your account and keep you updated about your orders and exclusive offers.
+    </p>
+</div>
+
+<p style="text-align: center;">
+    <a href="{{ verification_url }}" class="button">
+        Verify Email Address
+    </a>
+</p>
+
+<p><strong>Link not working?</strong> Copy and paste this URL into your browser:</p>
+<p style="word-break: break-all; background-color: #f3f4f6; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 14px;">
+    {{ verification_url }}
+</p>
+
+<p style="color: #6b7280; font-size: 14px;">
+    <em>This verification link will expire in 24 hours for security reasons.</em>
+</p>
+
+<p>Once verified, you'll be able to:</p>
+<ul>
+    <li>✅ Access your account dashboard</li>
+    <li>✅ Place orders and track shipments</li>
+    <li>✅ Receive important order updates</li>
+    <li>✅ Get exclusive member offers</li>
+</ul>
+
+<p>If you didn't create this account, please ignore this email.</p>
+
+<p>
+    <strong>The Funmitan Empire Team</strong>
+</p>
+{% endblock %}

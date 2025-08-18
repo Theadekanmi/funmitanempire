@@ -1,0 +1,75 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}Order Confirmation #{{ order.order_number }}{% endblock %}
+
+{% block subtitle %}Your Order is Confirmed!{% endblock %}
+
+{% block content %}
+<h2>Order Confirmation 🛍️</h2>
+
+<p>Hi {{ order.full_name }},</p>
+
+<p>Thank you for your order! We've received it and we're getting it ready for you.</p>
+
+<div class="highlight-box">
+    <h3 style="margin-top: 0; color: #ea580c;">📦 Order Details</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+        <tr>
+            <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;"><strong>Order Number:</strong></td>
+            <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;">{{ order.order_number }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;"><strong>Order Date:</strong></td>
+            <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;">{{ order.created_at|date:"F d, Y g:i A" }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;"><strong>Total Amount:</strong></td>
+            <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb; font-size: 18px; font-weight: bold; color: #ea580c;">£{{ order.total_amount }}</td>
+        </tr>
+        <tr>
+            <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;"><strong>Status:</strong></td>
+            <td style="padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
+                <span style="background-color: #fef3c7; color: #92400e; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold;">
+                    PROCESSING
+                </span>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="highlight-box">
+    <h3 style="margin-top: 0; color: #ea580c;">🚚 Shipping Address</h3>
+    <p style="margin: 0; line-height: 1.8;">
+        <strong>{{ order.full_name }}</strong><br>
+        {{ order.address }}<br>
+        {{ order.city }}, {{ order.postal_code }}<br>
+        {{ order.country }}
+    </p>
+</div>
+
+<p style="text-align: center;">
+    <a href="{{ track_url|default:'http://localhost:3000/track-order' }}" class="button">
+        Track Your Order
+    </a>
+</p>
+
+<h3 style="color: #ea580c;">What Happens Next?</h3>
+<ol>
+    <li><strong>Processing:</strong> We're preparing your order (1-2 business days)</li>
+    <li><strong>Shipping:</strong> Your order will be dispatched with tracking information</li>
+    <li><strong>Delivery:</strong> You'll receive your items at the address above</li>
+</ol>
+
+<p>We'll send you another email with tracking information once your order ships.</p>
+
+<p style="background-color: #f0f9ff; padding: 15px; border-radius: 6px; border-left: 4px solid #0ea5e9;">
+    <strong>💡 Tip:</strong> Save this email for your records. You can use your order number <strong>{{ order.order_number }}</strong> to track your shipment anytime.
+</p>
+
+<p>Thank you for choosing Funmitan Empire!</p>
+
+<p>
+    <strong>The Funmitan Empire Team</strong><br>
+    <em>Where Quality Meets Style</em>
+</p>
+{% endblock %}

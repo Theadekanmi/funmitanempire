@@ -66,7 +66,7 @@ export default function BackendConnection() {
           <h3 className="font-bold">Connection Failed</h3>
           <p className="text-sm">{error}</p>
           <p className="text-xs mt-2">
-            Make sure the Django server is running at http://127.0.0.1:8000
+            Make sure the Django server is running at {process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000'}
           </p>
         </div>
       </div>
@@ -124,7 +124,7 @@ export default function BackendConnection() {
         <ul className="text-sm space-y-1">
           <li>✅ GET /api/v1/products/</li>
           <li>✅ GET /api/v1/categories/</li>
-          <li>✅ Admin Panel: http://127.0.0.1:8000/admin/</li>
+                          <li>✅ Admin Panel: {process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000'}/admin/</li>
         </ul>
       </div>
 

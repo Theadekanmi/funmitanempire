@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import AddToCartButton from '@/components/cart/AddToCartButton'
 
-const API_BASE = 'http://127.0.0.1:8000/api/v1'
-const BACKEND_ORIGIN = 'http://127.0.0.1:8000'
+const API_BASE = '/api/v1'
+const BACKEND_ORIGIN = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000'
 
 async function fetchProduct(slug) {
   try {

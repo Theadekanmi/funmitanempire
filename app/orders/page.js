@@ -45,7 +45,7 @@ export default function OrdersPage() {
 
       // Make API request to fetch orders
       
-      const response = await fetch('http://127.0.0.1:8000/api/v1/orders/my_orders/', {
+              const response = await fetch('/api/v1/orders/my_orders/', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -260,7 +260,7 @@ export default function OrdersPage() {
                             <div className="flex-shrink-0 w-16 h-16 bg-gray-200 rounded-lg overflow-hidden">
                               {item.product?.image ? (
                                 <img 
-                                  src={`http://127.0.0.1:8000${item.product.image}`}
+                                                                     src={`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000'}${item.product.image}`}
                                   alt={item.product?.name || 'Product'}
                                   className="w-full h-full object-cover"
                                   onError={(e) => {

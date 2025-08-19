@@ -20,7 +20,7 @@ export default function TestSearchPage() {
       
       // Test 1: Direct fetch
       console.log('🔍 Test 1: Direct fetch...');
-      const directResponse = await fetch(`http://127.0.0.1:8000/api/v1/products/?search=${encodeURIComponent(query)}`);
+              const directResponse = await fetch(`/api/v1/products/?search=${encodeURIComponent(query)}`);
       console.log('Direct fetch status:', directResponse.status);
       
       if (directResponse.ok) {

@@ -13,7 +13,7 @@ export default function TrackOrderPage() {
     if (!orderNumber.trim()) return
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/v1/orders/${orderNumber}/track/`)
+              const response = await fetch(`/api/v1/orders/${orderNumber}/track/`)
       if (response.ok) {
         const order = await response.json()
         

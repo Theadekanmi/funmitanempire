@@ -29,7 +29,7 @@ export default function DebugConsole() {
     addLog(`🛒 Cart: ${cartItems.length} items`, cartItems.length > 0 ? 'success' : 'warning')
     
     // API check
-    fetch('http://127.0.0.1:8000/api/v1/products/')
+            fetch('/api/v1/products/')
       .then(res => addLog(`📡 API: ${res.ok ? '✅ Connected' : '❌ Error'}`, res.ok ? 'success' : 'error'))
       .catch(() => addLog('📡 API: ❌ Connection failed', 'error'))
     

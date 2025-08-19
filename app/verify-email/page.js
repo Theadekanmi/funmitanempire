@@ -29,7 +29,7 @@ export default function VerifyEmailPage() {
   const verifyEmailWithToken = async (verificationToken) => {
     setLoading(true)
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/v1/auth/verify-email/?token=${verificationToken}`, {
+              const response = await fetch(`/api/v1/auth/verify-email/?token=${verificationToken}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export default function VerifyEmailPage() {
     setMessage('')
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/v1/auth/resend-verification/', {
+              const response = await fetch('/api/v1/auth/resend-verification/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

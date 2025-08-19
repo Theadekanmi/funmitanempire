@@ -4,7 +4,7 @@ import requests
 import json
 
 # Test backend endpoints
-BASE_URL = 'http://127.0.0.1:8000/api/v1'
+BASE_URL = os.getenv('BACKEND_URL', 'http://127.0.0.1:8000') + '/api/v1'
 
 def test_endpoint(method, endpoint, data=None, headers=None):
     """Test a specific endpoint"""

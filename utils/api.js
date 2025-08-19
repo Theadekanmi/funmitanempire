@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // Backend configuration
-const BACKEND_ORIGIN = 'http://127.0.0.1:8000'
+const BACKEND_ORIGIN = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000'
 
 // Create axios instance
 const apiClient = axios.create({

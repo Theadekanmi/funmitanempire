@@ -1,0 +1,7 @@
+[33mcommit b957d2dcb90908115ef774402b2e049c40b1940e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Theadekanmi <theadekanmi@gmail.com>
+Date:   Mon Aug 18 19:34:10 2025 -0500
+
+    Fix hardcoded URLs for production deployment
+
+backend/orders/__pycache__/views.cpython-313.pyc

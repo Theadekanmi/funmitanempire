@@ -15,7 +15,7 @@ const ApiTest = () => {
     try {
       // Test 1: Health check
       try {
-        const healthResponse = await fetch('http://127.0.0.1:8000/health/');
+        const healthResponse = await fetch('/health/');
         results.health = healthResponse.ok ? '✅ Connected' : '❌ Failed';
       } catch (error) {
         results.health = '❌ Connection failed';
@@ -127,8 +127,8 @@ const ApiTest = () => {
             <h3 className="font-semibold text-blue-800 mb-2">Connection Details:</h3>
             <ul className="text-sm text-blue-700 space-y-1">
               <li>• Frontend URL: http://localhost:3001</li>
-              <li>• Backend URL: http://127.0.0.1:8000</li>
-              <li>• API Base: http://127.0.0.1:8000/api/v1/</li>
+                              <li>• Backend URL: {process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000'}</li>
+                <li>• API Base: {process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000'}/api/v1/</li>
               <li>• CORS: Configured for localhost:3000</li>
             </ul>
           </div>

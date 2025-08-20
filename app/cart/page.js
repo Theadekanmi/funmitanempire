@@ -5,7 +5,6 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { useCart } from '@/hooks/useCart'
 import { getImageUrl } from '@/utils/api'
-import Image from 'next/image'
 import Link from 'next/link'
 import { TrashIcon } from '@heroicons/react/24/outline'
 

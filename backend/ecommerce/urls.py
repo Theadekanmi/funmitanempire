@@ -60,6 +60,7 @@ api_v1_patterns = [
     path('orders/create_from_cart/', orders_views.create_order_from_cart, name='create_order_from_cart'),
     path('orders/my_orders/', orders_views.my_orders, name='my_orders'),
     path('orders/<str:order_number>/track/', orders_views.track_order, name='track_order'),
+    path('orders/<str:order_number>/paid/', orders_views.mark_order_paid, name='mark_order_paid'),
 
     # Wishlist
     path('wishlist/my_wishlist/', orders_views.my_wishlist, name='my_wishlist'),

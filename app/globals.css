@@ -9,6 +9,11 @@ body {
   color: #1f2937;
 }
 
+/* Smooth scrolling and sticky header support */
+html { scroll-behavior: smooth; }
+header { position: sticky; top: 0; z-index: 50; }
+main, .section-padding { scroll-margin-top: 72px; }
+
 /* Ensure containers work */
 .container {
   max-width: 1200px;

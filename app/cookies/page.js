@@ -141,7 +141,7 @@ export default function CookiesPage() {
                 <div className="bg-gray-50 rounded-lg p-4">
                   <p className="text-gray-700">
                     <strong>Funmitan Empire Limited</strong><br/>
-                    Email: hello@funmitanempire.com<br/>
+                    Email: funmitanempire@gmail.com<br/>
                     Phone: +44 (0) 20 1234 5678<br/>
                     Address: Manchester, United Kingdom
                   </p>

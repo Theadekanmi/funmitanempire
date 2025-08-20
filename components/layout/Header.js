@@ -46,9 +46,9 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex-shrink-0 flex items-center">
             <img 
-              src="/funmitan-logo.svg" 
+              src="/logo.png" 
               alt="Funmitan Empire Limited" 
-              className="h-12 w-12 mr-3"
+              className="h-10 w-auto sm:h-12 mr-3 drop-shadow"
             />
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold text-gray-800">

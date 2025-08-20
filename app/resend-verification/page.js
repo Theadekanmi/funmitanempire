@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { toast } from 'react-hot-toast'
+import { auth } from '@/utils/api'
 
 export default function ResendVerificationPage() {
   const [email, setEmail] = useState('')
@@ -17,23 +19,18 @@ export default function ResendVerificationPage() {
     setError('')
 
     try {
-              const response = await fetch('/api/v1/auth/resend-verification/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      })
-
-      if (response.ok) {
-        setMessage('Verification email sent! Please check your inbox.')
-        setEmail('')
-      } else {
-        const errorData = await response.json()
-        setError(errorData.error || 'Failed to send verification email')
-      }
+      const data = await auth.resendVerification(email)
+      setMessage(data.message || 'Verification email sent! Please check your inbox.')
+      toast.success(data.message || 'Verification email sent!')
+      setEmail('')
     } catch (err) {
-      setError('Network error. Please try again.')
+      let msg = 'Failed to send verification email'
+      try {
+        const parsed = JSON.parse(err.message)
+        msg = parsed.error || parsed.message || msg
+      } catch (e) {}
+      setError(msg)
+      toast.error(msg)
     } finally {
       setLoading(false)
     }

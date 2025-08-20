@@ -1,6 +1,6 @@
 export default function manifest() {
   return {
-    name: 'Funmitan Empire Limited - Premium Fashion & Fabrics',
+    name: 'Funmitan Empire Limited - African Fashion & Fabrics',
     short_name: 'Funmitan Empire',
     description: 'Discover premium fashion wear for women, teens, and men. Quality fabrics, gele, and ready-made designs. Fast UK delivery.',
     start_url: '/',

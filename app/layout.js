@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={inter.className}>
       <head>
-        <title>Funmitan Empire - Premium Fashion & Fabrics | UK Fashion Store</title>
+        <title>Funmitan Empire - African Fashion & Fabrics | UK Fashion Store</title>
         <meta name="description" content="Discover premium fashion wear for women, teens, and men. Quality fabrics, gele, and ready-made designs. Fast UK delivery, Manchester free shipping. Shop authentic African fashion." />
         <meta name="keywords" content="fashion, African fashion, gele, fabrics, women's clothing, men's clothing, teens fashion, UK fashion store, Manchester delivery, African fabrics" />
         <meta name="author" content="Funmitan Empire Limited" />
@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://funmitanempire.com/" />
-        <meta property="og:title" content="Funmitan Empire - Premium Fashion & Fabrics" />
+        <meta property="og:title" content="Funmitan Empire - African Fashion & Fabrics" />
         <meta property="og:description" content="Discover premium fashion wear for women, teens, and men. Quality fabrics, gele, and ready-made designs." />
         <meta property="og:image" content="https://funmitanempire.com/funmitan-logo.svg" />
         <meta property="og:site_name" content="Funmitan Empire" />
@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://funmitanempire.com/" />
-        <meta property="twitter:title" content="Funmitan Empire - Premium Fashion & Fabrics" />
+        <meta property="twitter:title" content="Funmitan Empire - African Fashion & Fabrics" />
         <meta property="twitter:description" content="Discover premium fashion wear for women, teens, and men. Quality fabrics, gele, and ready-made designs." />
         <meta property="twitter:image" content="https://funmitanempire.com/funmitan-logo.svg" />
         
@@ -66,7 +66,7 @@ export default function RootLayout({ children }) {
               "name": "Funmitan Empire Limited",
               "url": "https://funmitanempire.com",
               "logo": "https://funmitanempire.com/funmitan-logo.svg",
-              "description": "Premium fashion wear for women, teens, and men. Quality fabrics, gele, and ready-made designs.",
+              "description": "African fashion wear for women, teens, and men. Quality fabrics, gele, and ready-made designs.",
               "address": {
                 "@type": "PostalAddress",
                 "addressLocality": "Manchester",
@@ -74,9 +74,9 @@ export default function RootLayout({ children }) {
               },
               "contactPoint": {
                 "@type": "ContactPoint",
-                "telephone": "+44 (0) 20 1234 5678",
+                "telephone": "+44 7368369348",
                 "contactType": "customer service",
-                "email": "hello@funmitanempire.com"
+                "email": "funmitanempire@gmail.com"
               },
               "sameAs": [
                 "https://facebook.com/funmitanempire",

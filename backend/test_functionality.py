@@ -109,7 +109,7 @@ def test_functionality():
     
     print(f"\n🎉 SUMMARY:")
     print(f"   • Admin Panel: http://127.0.0.1:8000/admin/")
-    print(f"   • Frontend: http://localhost:3002")
+    print(f"   • Frontend: {os.getenv('FRONTEND_URL', 'http://localhost:3000')}")
     print(f"   • API Base: http://127.0.0.1:8000/api/v1/")
     print(f"   • Email: Real SMTP emails enabled")
     print(f"   • Products: {products.count()} with images")

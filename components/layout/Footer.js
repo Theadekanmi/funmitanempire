@@ -4,14 +4,14 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gray-900 text-white mt-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Funmitan Empire</h3>
             <p className="text-gray-400 mb-4">
-              Premium fashion wear for women, teens, and men. Quality fabrics, gele, and ready-made designs with FREE delivery to Manchester and UK mainland £50+.
+              African fashion wear for women, teens, and men. Quality fabrics, gele, and ready-made designs with FREE delivery to Manchester and UK mainland £50+.
             </p>
             <div className="text-gray-400 text-sm">
               <p>📧 funmitanempire@gmail.com</p>

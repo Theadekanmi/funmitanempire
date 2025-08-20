@@ -35,7 +35,7 @@ export default function HelpPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-primary-900">Email Support</h3>
-                    <p className="text-primary-700">hello@funmitanempire.com</p>
+                    <p className="text-primary-700">funmitanempire@gmail.com</p>
                     <p className="text-sm text-primary-600">Response within 24 hours</p>
                   </div>
                 </div>
@@ -155,7 +155,7 @@ export default function HelpPage() {
                   <div className="space-y-4">
                     <div>
                       <h4 className="font-medium text-gray-900 mb-2">Do you offer Gele tying services?</h4>
-                      <p className="text-gray-600">Yes! Racheal provides professional Gele tying services for special occasions. Basic styling starts at £25. <a href="/gele" className="text-primary-600 hover:text-primary-700">Learn more</a>.</p>
+                      <p className="text-gray-600">Yes! Racheal provides professional Gele tying services for special occasions. <a href="/gele" className="text-primary-600 hover:text-primary-700">Learn more</a>.</p>
                     </div>
                     
                     <div>
@@ -177,7 +177,7 @@ export default function HelpPage() {
                 <a href="/contact" className="btn-primary">
                   Contact Support
                 </a>
-                <a href="mailto:hello@funmitanempire.com" className="btn-secondary">
+                <a href="mailto:funmitanempire@gmail.com" className="btn-secondary">
                   Email Us Directly
                 </a>
               </div>

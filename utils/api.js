@@ -10,15 +10,27 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
+  xsrfCookieName: 'csrftoken',
+  xsrfHeaderName: 'X-CSRFToken',
 })
 
 // Request interceptor to add auth token
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('authToken')
+    const token = typeof window !== 'undefined' ? localStorage.getItem('authToken') : null
     if (token) {
+      if (!config.headers) config.headers = {}
       config.headers.Authorization = `Bearer ${token}`
     }
+    if (typeof document !== 'undefined') {
+      const match = document.cookie.match(/csrftoken=([^;]+)/)
+      if (match) {
+        if (!config.headers) config.headers = {}
+        if (!config.headers['X-CSRFToken']) config.headers['X-CSRFToken'] = match[1]
+      }
+    }
+    config.withCredentials = true
     return config
   },
   (error) => Promise.reject(error)
@@ -218,7 +230,13 @@ export const orders = {
   },
 
   async track(orderNumber) {
-    return await apiRequest(`/orders/${orderNumber}/track/`)
+    const clean = String(orderNumber).replace(/^#/, '').trim()
+    return await apiRequest(`/orders/${clean}/track/`)
+  },
+
+  async markPaid(orderNumber) {
+    const clean = String(orderNumber).replace(/^#/, '').trim()
+    return await apiRequest(`/orders/${clean}/paid/`, { method: 'POST' })
   },
 }
 
@@ -258,6 +276,7 @@ export const getOrder = orders.getById
 export const getWishlist = wishlist.get
 export const addToWishlist = wishlist.add
 export const removeFromWishlist = wishlist.remove
+export const searchProducts = products.search
 
 // Export everything as default
 const api = {
@@ -273,4 +292,5 @@ const api = {
   BACKEND_ORIGIN,
 }
 
+export { api }
 export default api

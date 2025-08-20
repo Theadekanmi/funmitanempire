@@ -123,8 +123,8 @@ class OrderAdmin(admin.ModelAdmin):
                 print(f"🔍 Rendering shipping notification template for order {order.order_number}")
                 html_message = render_to_string('emails/shipping_notification.html', {
                     'order': order,
-                    'track_url': f'http://localhost:3000/track-order?order={order.order_number}',
-                    'unsubscribe_url': f'http://localhost:3000/unsubscribe?email={order.email}'
+                    'track_url': f"{settings.FRONTEND_URL}/track-order?order={order.order_number}",
+                    'unsubscribe_url': f"{settings.FRONTEND_URL}/unsubscribe?email={order.email}"
                 })
                 print(f"✅ HTML template rendered successfully, length: {len(html_message)} characters")
                 

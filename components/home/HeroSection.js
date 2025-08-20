@@ -12,7 +12,7 @@ const HeroSection = () => {
           {/* Content */}
           <div className="order-2 lg:order-1">
             <h1 className="heading-primary mb-6 text-balance">
-              Premium Fashion for the
+              African Fashion for the
               <span className="text-primary-600 block">Modern You</span>
             </h1>
             

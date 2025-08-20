@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from django.db import transaction
+from django.conf import settings
 from .models import Cart, CartItem, Order, OrderItem, Wishlist, Contact, Newsletter
 from products.models import Product
 from .serializers import (
@@ -198,7 +199,6 @@ def create_order_from_cart(request):
             # Send email notifications
             try:
                 from django.core.mail import send_mail
-                from django.conf import settings
                 
                 # Email to admin (you)
                 admin_subject = f"New Order #{order.order_number}"
@@ -207,6 +207,7 @@ def create_order_from_cart(request):
                     for item in order.items.all()
                 ])
                 
+                admin_url = request.build_absolute_uri('/admin/orders/order/')
                 admin_message = f"""
 New order received!
 
@@ -227,14 +228,14 @@ Notes: {order.notes}
 
 Order Date: {order.created_at}
 
-Please login to the admin panel to process: http://127.0.0.1:8000/admin/orders/order/
+Please login to the admin panel to process: {admin_url}
                 """
                 
                 send_mail(
                     subject=admin_subject,
                     message=admin_message,
                     from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[settings.EMAIL_HOST_USER],  # funmitanempire@gmail.com
+                    recipient_list=[settings.EMAIL_HOST_USER, 'funmitanempire@gmail.com'],
                     fail_silently=True,
                 )
                 
@@ -362,7 +363,7 @@ Message:
 
 Submitted at: {contact_instance.created_at}
 
-Please login to the admin panel to reply: http://127.0.0.1:8000/admin/orders/contact/
+Please login to the admin panel to reply: http://203.161.60.101:8000/admin/orders/contact/
             """
             
             send_mail(
@@ -420,8 +421,8 @@ We're excited to have you as part of our fashion community!
 📸 Instagram: @funmitan2022
 🎵 TikTok: @funmitan2022
 
-🛒 Shop Now: http://localhost:3000
-🚫 Unsubscribe: http://localhost:3000/unsubscribe?email={newsletter.email}
+🛒 Shop Now: {settings.FRONTEND_URL}
+🚫 Unsubscribe: {settings.FRONTEND_URL}/unsubscribe?email={newsletter.email}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             """
             
@@ -455,3 +456,59 @@ def newsletter_unsubscribe(request):
         return Response({'message': 'Successfully unsubscribed from newsletter'})
     except Newsletter.DoesNotExist:
         return Response({'message': 'Email not found in newsletter list'}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def mark_order_paid(request, order_number):
+    """Mark an order as paid and send notifications.
+    This lightweight endpoint is meant to be called by the payment success handler.
+    """
+    try:
+        order = Order.objects.get(order_number=order_number)
+    except Order.DoesNotExist:
+        return Response({'error': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    try:
+        old_status = order.status
+        if old_status in ['pending', 'processing']:
+            order.status = 'processing'
+            order.save()
+
+        # Notify customer
+        from django.core.mail import send_mail
+        customer_subject = f"Payment Received - Order #{order.order_number}"
+        customer_message = (
+            f"Hi {order.full_name},\n\n"
+            f"We have received your payment for order #{order.order_number}. "
+            f"We'll start processing your order right away. You can track your order here: "
+            f"{settings.FRONTEND_URL}/track-order?order={order.order_number}\n\n"
+            f"Thank you for shopping with Funmitan Empire!"
+        )
+        send_mail(
+            subject=customer_subject,
+            message=customer_message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[order.email],
+            fail_silently=True,
+        )
+
+        # Notify admin
+        admin_subject = f"Payment Received - Order #{order.order_number}"
+        admin_message = (
+            f"Payment received for order #{order.order_number}.\n"
+            f"Customer: {order.full_name} ({order.email})\n"
+            f"Total: £{order.total_amount}\n"
+            f"View admin: http://203.161.60.101:8000/admin/orders/order/"
+        )
+        send_mail(
+            subject=admin_subject,
+            message=admin_message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[settings.EMAIL_HOST_USER, 'funmitanempire@gmail.com'],
+            fail_silently=True,
+        )
+
+        return Response({'message': 'Order marked as paid and notifications sent.'})
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)

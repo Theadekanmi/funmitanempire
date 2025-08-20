@@ -310,7 +310,7 @@ export default function OrdersPage() {
                           </button>
                         )}
                         <button
-                          onClick={() => window.open(`mailto:funmitanempire@gmail.com?subject=Order ${order.order_number} Support`, '_blank')}
+                          onClick={() => window.open(`mailto:funmitanempire@gmail.com?subject=Order%20${order.order_number}%20Support`, '_blank')}
                           className="text-orange-600 hover:text-orange-700 text-sm font-medium"
                         >
                           Contact Support

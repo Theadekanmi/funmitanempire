@@ -19,7 +19,7 @@ SECRET_KEY = 'django-insecure-$2y$10$abcdefghijklmnopqrstuvwxyz1234567890'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '203.161.60.101']
 
 
 # Application definition
@@ -135,12 +135,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    os.getenv('FRONTEND_URL', 'http://localhost:3000'),
     "http://127.0.0.1:3000",
-    "http://localhost:3001",
-    "http://127.0.0.1:3001",
-    "http://localhost:3002",
-    "http://127.0.0.1:3002",
+    "http://203.161.60.101",
+    "http://203.161.60.101:3000",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -193,7 +191,7 @@ DEFAULT_FROM_EMAIL = 'funmitanempire@gmail.com'
 # Frontend URL for email links
 # Dynamic frontend URL detection - supports any port
 import os
-FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://localhost:3000')
+FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://203.161.60.101')
 
 # Custom User Model
 AUTH_USER_MODEL = 'accounts.User'

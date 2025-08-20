@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import toast from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
+import { auth } from '@/utils/api'
 
 export default function VerifyEmailPage() {
   const searchParams = useSearchParams()
@@ -29,35 +30,25 @@ export default function VerifyEmailPage() {
   const verifyEmailWithToken = async (verificationToken) => {
     setLoading(true)
     try {
-              const response = await fetch(`/api/v1/auth/verify-email/?token=${verificationToken}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      
-      if (response.ok) {
-        const data = await response.json()
-        setMessage('Email verified successfully! You are now logged in.')
-        toast.success('Email verified successfully!')
-        
-        // Auto login if tokens are provided
-        if (data.tokens) {
-          localStorage.setItem('authToken', data.tokens.access)
-          localStorage.setItem('user', JSON.stringify(data.user))
-          // Redirect to account after short delay
-          setTimeout(() => {
-            window.location.href = '/account'
-          }, 2000)
-        }
-      } else {
-        const errorData = await response.json()
-        setError(errorData.error || 'Verification failed')
-        toast.error('Verification failed')
+      const data = await auth.verifyEmail(verificationToken)
+      setMessage(data.message || 'Email verified successfully! You are now logged in.')
+      toast.success('Email verified successfully!')
+
+      if (data.tokens) {
+        localStorage.setItem('authToken', data.tokens.access)
+        localStorage.setItem('user', JSON.stringify(data.user))
+        setTimeout(() => {
+          window.location.href = '/account'
+        }, 2000)
       }
     } catch (err) {
-      setError('Network error during verification')
-      toast.error('Network error during verification')
+      let msg = 'Verification failed'
+      try {
+        const parsed = JSON.parse(err.message)
+        msg = parsed.error || parsed.message || msg
+      } catch (e) {}
+      setError(msg)
+      toast.error(msg)
     } finally {
       setLoading(false)
     }
@@ -75,26 +66,18 @@ export default function VerifyEmailPage() {
     setMessage('')
 
     try {
-              const response = await fetch('/api/v1/auth/resend-verification/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      })
-
-      if (response.ok) {
-        setMessage('Verification email sent! Please check your inbox.')
-        toast.success('Verification email sent!')
-        setEmail('')
-      } else {
-        const errorData = await response.json()
-        setError(errorData.error || 'Failed to send verification email')
-        toast.error('Failed to send verification email')
-      }
+      const data = await auth.resendVerification(email)
+      setMessage(data.message || 'Verification email sent! Please check your inbox.')
+      toast.success(data.message || 'Verification email sent!')
+      setEmail('')
     } catch (err) {
-      setError('Network error. Please try again.')
-      toast.error('Network error. Please try again.')
+      let msg = 'Failed to send verification email'
+      try {
+        const parsed = JSON.parse(err.message)
+        msg = parsed.error || parsed.message || msg
+      } catch (e) {}
+      setError(msg)
+      toast.error(msg)
     } finally {
       setLoading(false)
     }

@@ -204,7 +204,7 @@ const OrderTracking = () => {
               <a href="/contact" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-center">
                 Contact Support
               </a>
-              <a href="mailto:hello@funmitanempire.com" className="bg-white text-blue-600 border border-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors text-center">
+              <a href="mailto:funmitanempire@gmail.com" className="bg-white text-blue-600 border border-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors text-center">
                 Email Us
               </a>
             </div>
@@ -225,8 +225,8 @@ const OrderTracking = () => {
             </p>
             <p>
               <strong>Still Can't Find It?</strong> Contact our customer service team at{' '}
-              <a href="mailto:hello@funmitanempire.com" className="text-primary-600 hover:text-primary-700">
-                hello@funmitanempire.com
+              <a href="mailto:funmitanempire@gmail.com" className="text-primary-600 hover:text-primary-700">
+                funmitanempire@gmail.com
               </a>{' '}
               or call us at +44 (0) 20 1234 5678.
             </p>

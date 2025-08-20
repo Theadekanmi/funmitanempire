@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { useCart } from '@/hooks/useCart'
 import { getImageUrl } from '@/utils/api'
@@ -31,23 +30,20 @@ export default function ProductCard({ product }) {
     }
   }
 
-
-
   const price = product.sale_price || product.price
   const originalPrice = product.sale_price ? product.price : null
   const imageUrl = imageError ? '/placeholder-image.svg' : getImageUrl(product.image)
 
   return (
-    <Link href={`/products/${product.slug}`} className="group">
+    <Link href={`/products/${product.slug}`} prefetch={false} className="group">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
         {/* Image */}
         <div className="relative aspect-square overflow-hidden bg-gray-100">
-          <Image
+          <img
             src={imageUrl}
             alt={product.name}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover group-hover:scale-105 transition-transform duration-200"
+            className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-200"
+            loading="lazy"
             onError={() => setImageError(true)}
           />
           

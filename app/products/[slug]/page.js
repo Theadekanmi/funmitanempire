@@ -6,7 +6,7 @@ const BACKEND_ORIGIN = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:
 
 async function fetchProduct(slug) {
   try {
-    const res = await fetch(`${API_BASE}/products/${slug}/`, { 
+    const res = await fetch(`${BACKEND_ORIGIN}${API_BASE}/products/${slug}/`, { 
       cache: 'no-store',
       headers: {
         'Content-Type': 'application/json',

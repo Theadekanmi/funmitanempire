@@ -139,7 +139,7 @@ export default function ContactForm() {
             </svg>
           </div>
           <h3 className="text-lg font-medium text-gray-900 mb-2">Phone</h3>
-          <p className="text-gray-600">+44 123 456 7890</p>
+          <p className="text-gray-600">+447368369348</p>
         </div>
 
         <div className="text-center">
@@ -149,7 +149,7 @@ export default function ContactForm() {
             </svg>
           </div>
           <h3 className="text-lg font-medium text-gray-900 mb-2">Email</h3>
-          <p className="text-gray-600">info@funmitan.com</p>
+          <p className="text-gray-600">funmitanempire@gmail.com</p>
         </div>
 
         <div className="text-center">
@@ -160,7 +160,7 @@ export default function ContactForm() {
             </svg>
           </div>
           <h3 className="text-lg font-medium text-gray-900 mb-2">Address</h3>
-          <p className="text-gray-600">London, UK</p>
+          <p className="text-gray-600">Manchester, United Kingdom</p>
         </div>
       </div>
     </div>

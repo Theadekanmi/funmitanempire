@@ -79,12 +79,12 @@ export default function CartPage() {
                     return (
                       <div key={item.id} className="p-6">
                         <div className="flex items-start space-x-4">
-                          <div className="flex-shrink-0 w-24 h-24 relative">
-                            <Image
+                          <div className="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 relative">
+                            <img
                               src={getImageUrl(product.image)}
                               alt={product.name}
-                              fill
-                              className="object-cover rounded-md"
+                              className="object-cover rounded-md w-full h-full"
+                              loading="lazy"
                             />
                           </div>
                           

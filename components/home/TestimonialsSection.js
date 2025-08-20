@@ -6,12 +6,12 @@ import { StarIcon } from '@heroicons/react/24/solid'
 const TestimonialsSection = () => {
   const testimonials = [
     {
-      id: 1,
-      name: 'Sarah Johnson',
-      location: 'London, UK',
+      name: 'Sarah M.',
+      role: 'Fashion Enthusiast',
+      image: '/testimonials/sarah.jpg',
+      content: 'The quality of these African fabrics is incredible! I love how unique and vibrant each piece is.',
       rating: 5,
-      text: 'Absolutely love the quality of the fabrics! The Ankara dress I ordered exceeded my expectations. Fast delivery and excellent customer service.',
-      product: 'Ankara Dress Collection',
+      location: 'Manchester, UK',
     },
     {
       id: 2,

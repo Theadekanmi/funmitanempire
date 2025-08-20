@@ -146,7 +146,7 @@ export default function ReturnsExchangePage() {
                   <li><strong>Email:</strong> returns@funmitanempire.com</li>
                   <li><strong>Phone:</strong> +44 (0) 20 1234 5678</li>
                   <li><strong>Hours:</strong> Monday-Friday, 9:00 AM - 6:00 PM GMT</li>
-                  <li><strong>Address:</strong> Funmitan Empire Limited, London, UK</li>
+                  <li><strong>Address:</strong> Funmitan Empire Limited, Manchester, UK</li>
                 </ul>
               </div>
 

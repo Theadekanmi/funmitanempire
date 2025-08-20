@@ -45,19 +45,11 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0 flex items-center">
-            <div className="relative">
-              <img 
-                src="/logo.png" 
-                alt="Funmitan Empire Limited" 
-                className="h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 mr-3"
-                style={{ 
-                  filter: 'drop-shadow(0 0 0.75rem rgba(0, 0, 0, 0.2))',
-                  backgroundColor: '#1e3a8a',
-                  borderRadius: '8px',
-                  padding: '4px'
-                }}
-              />
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="Funmitan Empire Limited" 
+              className="h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 mr-3"
+            />
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold text-gray-800 sm:text-2xl md:text-3xl lg:text-4xl">
                 Funmitan Empire

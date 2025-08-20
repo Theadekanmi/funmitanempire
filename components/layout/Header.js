@@ -46,9 +46,9 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex-shrink-0 flex items-center">
             <img 
-              src="/logo.png" 
+              src="/logo.jpg" 
               alt="Funmitan Empire Limited" 
-              className="h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 mr-3"
+              className="h-12 w-auto sm:h-14 sm:w-auto md:h-16 md:w-auto mr-3"
             />
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold text-gray-800 sm:text-2xl md:text-3xl lg:text-4xl">

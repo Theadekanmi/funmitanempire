@@ -16,28 +16,28 @@ export default function TestSearchPage() {
     setError('');
     
     try {
-      console.log('🔍 Testing search for:', query);
+
       
       // Test 1: Direct fetch
-      console.log('🔍 Test 1: Direct fetch...');
+
               const directResponse = await fetch(`/api/v1/products/?search=${encodeURIComponent(query)}`);
-      console.log('Direct fetch status:', directResponse.status);
+
       
       if (directResponse.ok) {
         const directData = await directResponse.json();
-        console.log('Direct fetch data:', directData);
+
       }
       
       // Test 2: API function
-      console.log('🔍 Test 2: API function...');
+
       const apiData = await searchProducts(query);
-      console.log('API function data:', apiData);
+
       
       const productsArray = Array.isArray(apiData) ? apiData : 
                           apiData.results || apiData.data || [];
       
       setResults(productsArray);
-      console.log('Final results:', productsArray);
+
       
     } catch (err) {
       console.error('Search test failed:', err);

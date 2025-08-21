@@ -20,11 +20,11 @@ export default function SearchResults({ query }) {
       setLoading(true);
       setError('');
       
-      console.log('🔍 SEARCH DEBUG: Starting search for:', searchQuery);
+
       
       // Use the API function directly
       const data = await searchProducts(searchQuery);
-      console.log('🔍 SEARCH DEBUG: API response:', data);
+
       
       // Handle different response formats
       let productsArray = [];
@@ -38,7 +38,7 @@ export default function SearchResults({ query }) {
         productsArray = data;
       }
       
-      console.log('🔍 SEARCH DEBUG: Processed products array:', productsArray);
+
       setProducts(productsArray);
       
     } catch (err) {
@@ -51,7 +51,7 @@ export default function SearchResults({ query }) {
   }, []);
 
   useEffect(() => {
-    console.log('🔍 SEARCH DEBUG: useEffect triggered with query:', query);
+
     
     // Debounce search to avoid too many API calls
     const timeoutId = setTimeout(() => {

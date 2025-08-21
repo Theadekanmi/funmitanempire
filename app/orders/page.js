@@ -37,7 +37,7 @@ export default function OrdersPage() {
       const token = localStorage.getItem('authToken')
 
       if (!token) {
-        console.log('❌ No token found - redirecting to login')
+
         setError('Please login again')
         router.push('/account')
         return

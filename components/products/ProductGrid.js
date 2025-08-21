@@ -13,27 +13,13 @@ export default function ProductGrid({ category = null, filters = {} }) {
   const [totalPages, setTotalPages] = useState(1);
   const [totalProducts, setTotalProducts] = useState(0);
 
-  // Debug info
-  useEffect(() => {
-    console.log('🔍 ProductGrid Debug Info:');
-    console.log('  Category:', category);
-    console.log('  Current Page:', currentPage);
-    console.log('  Total Pages:', totalPages);
-    console.log('  Total Products:', totalProducts);
-    console.log('  Products on this page:', productsList.length);
-    console.log('  Loading:', loading);
-    console.log('  Error:', error);
-  }, [category, currentPage, totalPages, totalProducts, productsList.length, loading, error]);
+
 
   // Memoize the fetch function to prevent unnecessary re-renders
   const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
-      
-      console.log('Fetching products for category:', category);
-      console.log('Filters:', filters);
-      console.log('Current page:', currentPage);
       
       // Build query parameters
       const params = { ...filters };
@@ -42,31 +28,18 @@ export default function ProductGrid({ category = null, filters = {} }) {
         params.category__slug = category;
       }
       
-      console.log('API params:', params);
-      
       const data = await products.getAll({ ...params, page: currentPage });
-      console.log('API response data:', data);
-      console.log('API response structure:', {
-        isArray: Array.isArray(data),
-        hasResults: !!data.results,
-        hasData: !!data.data,
-        count: data.count,
-        next: data.next,
-        previous: data.current_page || currentPage
-      });
       
       // Handle pagination response
       const productsArray = Array.isArray(data) ? data : 
                           data.results || data.data || [];
-      
-      console.log('Processed products array:', productsArray);
       setProductsList(productsArray);
       
       // Set pagination info
       if (data.count !== undefined) {
         setTotalProducts(data.count);
         setTotalPages(Math.ceil(data.count / 20)); // 20 products per page
-        console.log('📊 Pagination set:', { count: data.count, totalPages: Math.ceil(data.count / 20) });
+
       }
       
     } catch (err) {

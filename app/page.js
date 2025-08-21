@@ -14,12 +14,8 @@ export default function HomePage() {
   useEffect(() => {
     const loadFeaturedProducts = async () => {
       try {
-        console.log('🔍 Loading featured products...');
         // Only fetch products that are actually marked as featured
         const data = await products.getAll({ is_featured: true, _t: Date.now() });
-        console.log('📊 API Response:', data);
-        console.log('📦 Products fetched:', data.results?.length || 0);
-        console.log('🏷️ Featured products:', data.results?.map(p => ({ name: p.name, featured: p.is_featured })) || []);
         
         setFeaturedProducts(data.results || []);
       } catch (error) {

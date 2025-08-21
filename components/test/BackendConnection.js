@@ -18,11 +18,8 @@ export default function BackendConnection() {
         
         // Test products API
         const productsData = await getProducts();
-        console.log('Products API response:', productsData);
-        
         // Test categories API
         const categoriesData = await getCategories();
-        console.log('Categories API response:', categoriesData);
         
         // Handle different response formats
         const productsArray = Array.isArray(productsData) ? productsData : 
@@ -35,9 +32,7 @@ export default function BackendConnection() {
         setCategories(categoriesArray);
         setApiResponse({ products: productsData, categories: categoriesData });
         
-        console.log('✅ Backend connection successful!');
-        console.log('Products array:', productsArray);
-        console.log('Categories array:', categoriesArray);
+
         
       } catch (err) {
         console.error('❌ Backend connection failed:', err);

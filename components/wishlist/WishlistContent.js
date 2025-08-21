@@ -14,17 +14,13 @@ export default function WishlistContent() {
   const fetchWishlist = async () => {
     try {
       setLoading(true);
-      console.log('💖 Fetching wishlist...');
-      
       if (!user) {
-        console.log('💖 No user logged in, using local wishlist');
         const localWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
         setWishlistItems(localWishlist);
         return;
       }
 
       const data = await wishlist.get();
-      console.log('💖 Wishlist API response:', data);
       
       // Handle different response formats
       let items = [];
@@ -37,8 +33,6 @@ export default function WishlistContent() {
       } else if (data && data.data) {
         items = data.data;
       }
-      
-      console.log('💖 Processed wishlist items:', items);
       setWishlistItems(items);
       
     } catch (err) {
@@ -55,7 +49,7 @@ export default function WishlistContent() {
 
   const handleRemoveFromWishlist = async (productId) => {
     try {
-      console.log('💖 Removing from wishlist:', productId);
+
       await wishlist.remove(productId);
       fetchWishlist(); // Refresh wishlist
     } catch (err) {

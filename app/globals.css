@@ -2,6 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile-specific fixes */
+@media (max-width: 768px) {
+  /* Prevent shaking on mobile */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Smooth transitions for mobile */
+  .transition-colors {
+    transition: color 0.2s ease-in-out;
+  }
+  
+  /* Fix mobile viewport issues */
+  body {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  /* Prevent horizontal scrolling */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+  
+  /* Fix mobile button issues */
+  button, input, select, textarea {
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* General mobile improvements */
+.btn-primary {
+  @apply bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors duration-200;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 text-gray-800 px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors duration-200;
+}
+
 /* Ensure base styles are applied */
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;

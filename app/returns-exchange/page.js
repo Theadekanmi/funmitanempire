@@ -73,7 +73,7 @@ export default function ReturnsExchangePage() {
               
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Step 1: Contact Us</h3>
               <p className="text-gray-700 mb-4">
-                Email us at <strong>returns@funmitanempire.com</strong> or call us at <strong>+44 (0) 20 1234 5678</strong> 
+                Email us at <strong>funmitanempire@gmail.com</strong> or call us at <strong>+447368369348</strong> 
                 with your order number and reason for return/exchange.
               </p>
 
@@ -143,8 +143,8 @@ export default function ReturnsExchangePage() {
                   For questions about returns or exchanges, please contact us:
                 </p>
                 <ul className="text-gray-700 space-y-2">
-                  <li><strong>Email:</strong> returns@funmitanempire.com</li>
-                  <li><strong>Phone:</strong> +44 (0) 20 1234 5678</li>
+                  <li><strong>Email:</strong> funmitanempire@gmail.com</li>
+                  <li><strong>Phone:</strong> +447368369348</li>
                   <li><strong>Hours:</strong> Monday-Friday, 9:00 AM - 6:00 PM GMT</li>
                   <li><strong>Address:</strong> Funmitan Empire Limited, Manchester, UK</li>
                 </ul>

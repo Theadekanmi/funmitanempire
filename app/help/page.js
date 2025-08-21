@@ -48,7 +48,7 @@ export default function HelpPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-primary-900">Phone Support</h3>
-                    <p className="text-primary-700">+44 (0) 20 1234 5678</p>
+                    <p className="text-primary-700">+447368369348</p>
                     <p className="text-sm text-primary-600">Mon-Fri 9AM-5PM GMT</p>
                   </div>
                 </div>
@@ -94,7 +94,7 @@ export default function HelpPage() {
                     
                     <div>
                       <h4 className="font-medium text-gray-900 mb-2">Can I modify or cancel my order?</h4>
-                      <p className="text-gray-600">Please contact us immediately at hello@funmitanempire.com if you need to modify or cancel your order. We'll do our best to accommodate changes before shipping.</p>
+                      <p className="text-gray-600">Please contact us immediately at funmitanempire@gmail.com if you need to modify or cancel your order. We'll do our best to accommodate changes before shipping.</p>
                     </div>
                     
                     <div>

@@ -228,7 +228,7 @@ const OrderTracking = () => {
               <a href="mailto:funmitanempire@gmail.com" className="text-primary-600 hover:text-primary-700">
                 funmitanempire@gmail.com
               </a>{' '}
-              or call us at +44 (0) 20 1234 5678.
+              or call us at +447368369348.
             </p>
           </div>
         </div>

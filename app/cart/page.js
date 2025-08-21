@@ -120,11 +120,12 @@ export default function CartPage() {
                               <label htmlFor={`quantity-${item.id}`} className="sr-only">
                                 Quantity
                               </label>
-                              <div className="flex items-center border border-gray-300 rounded-md">
+                              <div className="flex items-center space-x-2">
                                 <button
                                   type="button"
                                   onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                                  className="px-3 py-1 text-gray-500 hover:text-gray-700"
+                                  className="px-3 py-1 text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                                  aria-label="Decrease quantity"
                                 >
                                   -
                                 </button>
@@ -133,13 +134,15 @@ export default function CartPage() {
                                   id={`quantity-${item.id}`}
                                   value={item.quantity}
                                   onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value) || 1)}
-                                  className="w-16 px-2 py-1 text-center border-0 focus:ring-0"
+                                  className="w-16 px-2 py-1 text-center border-0 focus:ring-0 focus:outline-none"
                                   min="1"
+                                  aria-label="Quantity"
                                 />
                                 <button
                                   type="button"
                                   onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                                  className="px-3 py-1 text-gray-500 hover:text-gray-700"
+                                  className="px-3 py-1 text-gray-500 hover:text-gray-700 transition-colors duration-200"
+                                  aria-label="Increase quantity"
                                 >
                                   +
                                 </button>

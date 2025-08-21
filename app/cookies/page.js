@@ -142,7 +142,7 @@ export default function CookiesPage() {
                   <p className="text-gray-700">
                     <strong>Funmitan Empire Limited</strong><br/>
                     Email: funmitanempire@gmail.com<br/>
-                    Phone: +44 (0) 20 1234 5678<br/>
+                    Phone: +447368369348<br/>
                     Address: Manchester, United Kingdom
                   </p>
                 </div>

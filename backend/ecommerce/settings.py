@@ -17,9 +17,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$2y$10$abcdefghijklmnopqrstuvwxyz1234567890'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '203.161.60.101']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '203.161.60.101', 'funmitanempire.uk', 'www.funmitanempire.uk']
 
 
 # Application definition
@@ -44,9 +44,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'ecommerce.middleware.SecurityHeadersMiddleware',  # Custom security headers
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -135,20 +135,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
+    "https://funmitanempire.uk",
+    "https://www.funmitanempire.uk",
     "http://127.0.0.1:3000",
     "http://localhost:3000",
-    "http://203.161.60.101",
-    "http://203.161.60.101:3000",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = [
+    "https://funmitanempire.uk",
+    "https://www.funmitanempire.uk",
     "http://127.0.0.1:3000",
     "http://localhost:3000",
-    "http://203.161.60.101",
-    "http://203.161.60.101:3000",
 ]
 
 # REST Framework settings
@@ -199,7 +199,7 @@ DEFAULT_FROM_EMAIL = 'funmitanempire@gmail.com'
 # Frontend URL for email links
 # Dynamic frontend URL detection - supports any port
 import os
-FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://203.161.60.101')
+FRONTEND_URL = os.getenv('FRONTEND_URL', 'https://funmitanempire.uk')
 
 # Custom User Model
 AUTH_USER_MODEL = 'accounts.User'
@@ -207,7 +207,7 @@ AUTH_USER_MODEL = 'accounts.User'
 # PayPal Settings
 PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID', 'sandbox_client_id')  # Replace with real client ID
 PAYPAL_CLIENT_SECRET = os.getenv('PAYPAL_CLIENT_SECRET', 'sandbox_secret')  # Replace with real secret
-PAYPAL_MODE = os.getenv('PAYPAL_MODE', 'sandbox')  # 'sandbox' or 'live'
+PAYPAL_MODE = os.getenv('PAYPAL_MODE', 'sandbox')
 
 # Security Settings
 SECURE_BROWSER_XSS_FILTER = True
@@ -234,3 +234,27 @@ if not DEBUG:
 
 # Rate Limiting (for production)
 # Install django-ratelimit: pip install django-ratelimit
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_DOMAIN = '.funmitanempire.uk'
+SESSION_COOKIE_DOMAIN = '.funmitanempire.uk'
+CSRF_COOKIE_DOMAIN = '.funmitanempire.uk'
+SESSION_COOKIE_DOMAIN = '.funmitanempire.uk'
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+
+# --- CSRF/Session cookie config (final override) ---
+CSRF_COOKIE_NAME = 'csrftoken'
+CSRF_COOKIE_DOMAIN = '.funmitanempire.uk'
+SESSION_COOKIE_DOMAIN = '.funmitanempire.uk'
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SAMESITE = 'Lax'

@@ -1,0 +1,19 @@
+nohup: ignoring input
+
+> funmitan-empire-ecommerce@1.0.0 start
+> next start
+
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3000Missing `origin` header from a forwarded Server Actions request.
+Error: Failed to find Server Action "null". This request might be from an older or newer deployment. Original error: Invariant: Missing 'next-action' header.
+    at ry (/var/www/funmitan/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:16:1644)
+    at /var/www/funmitan/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:15:6358
+    at AsyncLocalStorage.run (node:internal/async_local_storage/async_hooks:91:14)
+    at rm (/var/www/funmitan/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:15:5711)
+    at rD (/var/www/funmitan/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:16:22552)
+    at /var/www/funmitan/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:16:25097
+    at AsyncLocalStorage.run (node:internal/async_local_storage/async_hooks:91:14)
+    at Object.wrap (/var/www/funmitan/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:13:16241)
+    at /var/www/funmitan/node_modules/next/dist/compiled/next-server/app-page.runtime.prod.js:16:24987
+    at AsyncLocalStorage.run (node:internal/async_local_storage/async_hooks:91:14)
+Killed

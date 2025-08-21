@@ -1,0 +1,215 @@
+
+
+import axios from 'axios'
+// Backend configuration
+const BACKEND_ORIGIN = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000'
+// Create axios instance
+const apiClient = axios.create({
+  baseURL: `${BACKEND_ORIGIN}/api/v1`,
+  timeout: 10000,
+  withCredentials: true,
+  xsrfCookieName: 'csrftoken',
+  xsrfHeaderName: 'X-CSRFToken',
+  headers: {
+    'Content-Type': 'application/json',
+ }
+})
+// Request interceptor to add auth token
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('authToken')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+  (error) => Promise.reject(error)
+)
+// Response interceptor for error handling
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('authToken')
+      localStorage.removeItem('user')
+      window.location.href = '/login'
+    }
+    return Promise.reject(error)
+  }
+)
+// Generic API request function
+async function apiRequest(endpoint, options = {}) {
+  try {
+    const response = await apiClient({
+      url: endpoint,
+      ...options,
+    })
+    return response.data
+  } catch (error) {
+    if (error.response?.data) {
+      throw new Error(JSON.stringify(error.response.data))
+    }
+    throw error
+  }
+}
+// Auth API
+export const auth = {
+  async register(userData) {
+    const data = await apiRequest('/auth/register/', {
+      method: 'POST',
+      data: userData,
+    })
+    return data
+  async login(credentials) {
+    const data = await apiRequest('/auth/login/', {
+      method: 'POST',
+      data: credentials,
+    })
+    // Handle both direct access token and tokens object
+    const accessToken = data.access || data.tokens?.access
+    if (accessToken) {
+      localStorage.setItem('authToken', accessToken)
+      localStorage.setItem('user', JSON.stringify(data.user))
+    }
+    return data
+  async logout() {
+    await apiRequest('/auth/logout/', { method: 'POST' })
+    localStorage.removeItem('authToken')
+    localStorage.removeItem('user')
+  async getProfile() {
+    return await apiRequest('/auth/profile/')
+  async updateProfile(profileData) {
+    return await apiRequest('/profile/update/', {
+      method: 'PUT',
+      data: profileData,
+    })
+  async verifyEmail(token) {
+    return await apiRequest(`/auth/verify-email/?token=${token}`)
+  async requestPasswordReset(email) {
+    return await apiRequest('/auth/password-reset/', {
+      method: 'POST',
+      data: { email },
+    })
+  async resendVerification(email) {
+    return await apiRequest('/auth/resend-verification/', {
+      method: 'POST',
+      data: { email },
+    })
+}
+// Products API
+export const products = {
+  async getAll(params = {}) {
+    const searchParams = new URLSearchParams(params)
+    return await apiRequest(`/products/?${searchParams}`)
+  async getById(id) {
+    return await apiRequest(`/products/${id}/`)
+  async getBySlug(slug) {
+    return await apiRequest(`/products/${slug}/`)
+  async search(query, filters = {}) {
+    const params = { search: query, ...filters }
+    const searchParams = new URLSearchParams(params)
+    return await apiRequest(`/products/?${searchParams}`)
+}
+// Categories API
+export const categories = {
+  async getAll() {
+    return await apiRequest('/categories/')
+  async getById(id) {
+    return await apiRequest(`/categories/${id}/`)
+  async getProducts(slug, params = {}) {
+    const searchParams = new URLSearchParams(params)
+    return await apiRequest(`/categories/${slug}/products/?${searchParams}`)
+}
+// Cart API
+export const cart = {
+  async get() {
+    return await apiRequest('/cart/my_cart/')
+  async addItem(productId, quantity = 1) {
+    return await apiRequest('/cart/add_item/', {
+      method: 'POST',
+      data: { product_id: productId, quantity },
+    })
+  async updateItem(itemId, quantity) {
+    return await apiRequest('/cart/update_item/', {
+      method: 'PUT',
+      data: { item_id: itemId, quantity },
+    })
+  async removeItem(itemId) {
+    return await apiRequest('/cart/remove_item/', {
+      method: 'DELETE',
+      data: { item_id: itemId },
+    })
+  async clear() {
+    return await apiRequest('/cart/clear_cart/', {
+      method: 'DELETE',
+    })
+}
+// Wishlist API - DISABLED
+export const wishlist = {
+  async get() {
+    return { items: [] }
+  async add(productId) {
+    return { message: 'Wishlist feature temporarily disabled' }
+  async remove(productId) {
+    return { message: 'Wishlist feature temporarily disabled' }
+}
+// Orders API
+export const orders = {
+  async getAll() {
+    return await apiRequest('/orders/my_orders/')
+  async getById(id) {
+    return await apiRequest(`/orders/${id}/`)
+  async create(orderData) {
+    return await apiRequest('/orders/create_from_cart/', {
+      method: 'POST',
+      data: orderData,
+    })
+  async track(orderNumber) {
+  const clean = String(orderNumber).replace(/^#/, '').trim()
+  return await apiRequest(`/orders/${clean}/track/`)
+// Contact API
+export const contact = {
+  async send(contactData) {
+    return await apiRequest('/contact/', {
+      method: 'POST',
+      data: contactData,
+    })
+}
+// Newsletter API
+export const newsletter = {
+  async subscribe(email) {
+    return await apiRequest('/newsletter/subscribe/', {
+      method: 'POST',
+      data: { email },
+    })
+}
+// Helper function to get full image URL
+export function getImageUrl(imagePath) {
+  if (!imagePath) return '/placeholder-image.svg'
+  if (imagePath.startsWith('http')) return imagePath
+  return `${BACKEND_ORIGIN}${imagePath}`
+}
+// Add alias for missing exports
+export const sendContactMessage = contact.send
+export const verifyEmail = auth.verifyEmail
+export const requestPasswordReset = auth.requestPasswordReset
+export const getOrders = orders.getAll
+export const getOrder = orders.getById
+export const getWishlist = wishlist.get
+export const addToWishlist = wishlist.add
+export const removeFromWishlist = wishlist.remove
+// Export everything as default
+const api = {
+  auth,
+  products,
+  categories,
+  cart,
+  wishlist,
+  orders,
+  contact,
+  newsletter,
+  getImageUrl,
+  BACKEND_ORIGIN,
+}
+export { api };
+export const searchProducts = products.search;
+export default api

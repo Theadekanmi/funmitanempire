@@ -103,24 +103,9 @@ export default function CheckoutPage() {
     setLoading(true)
     
     try {
-      const response = await fetch('/api/v1/orders/create_from_cart/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-        },
-        body: JSON.stringify(formData)
-      })
-
-      if (response.ok) {
-        const order = await response.json()
-        setCurrentOrder(order)
-        setOrderCreated(true)
-        toast.success('Order created! Please complete payment.')
-      } else {
-        const errorData = await response.json()
-        toast.error(errorData.error || 'Failed to place order')
-      }
+      // Just validate the form and proceed to payment
+      setOrderCreated(true)
+      toast.success('Please complete payment to finalize your order.')
     } catch (error) {
       toast.error('Network error. Please try again.')
     } finally {
@@ -130,25 +115,47 @@ export default function CheckoutPage() {
 
   const handlePayPalSuccess = async (details, data) => {
     try {
-      const response = await fetch('/api/v1/payments/capture-order/', {
+      // First create the order with payment details
+      const orderResponse = await fetch('/api/v1/orders/create_from_cart/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         },
         body: JSON.stringify({
+          ...formData,
           paypal_order_id: data.orderID,
-          order_number: currentOrder.order_number
+          payment_status: 'completed'
         })
       })
 
-      if (response.ok) {
-        await clearCart()
-        toast.success('Payment successful! Order confirmed.')
-        router.push(`/orders`)
+      if (orderResponse.ok) {
+        const order = await orderResponse.json()
+        
+        // Then capture the payment
+        const captureResponse = await fetch('/api/v1/payments/capture-order/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+          },
+          body: JSON.stringify({
+            paypal_order_id: data.orderID,
+            order_number: order.order_number
+          })
+        })
+
+        if (captureResponse.ok) {
+          await clearCart()
+          toast.success('Payment successful! Order confirmed.')
+          router.push(`/orders`)
+        } else {
+          const errorData = await captureResponse.json()
+          toast.error(errorData.error || 'Payment capture failed')
+        }
       } else {
-        const errorData = await response.json()
-        toast.error(errorData.error || 'Payment capture failed')
+        const errorData = await orderResponse.json()
+        toast.error(errorData.error || 'Failed to create order')
       }
     } catch (error) {
       toast.error('Payment processing error. Please contact support.')
@@ -310,20 +317,20 @@ export default function CheckoutPage() {
                     disabled={loading}
                     className="w-full bg-orange-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-orange-700 transition-colors disabled:opacity-50"
                   >
-                    {loading ? 'Processing...' : `Create Order - £${finalTotal.toFixed(2)}`}
+                    {loading ? 'Processing...' : `Proceed to Payment - £${finalTotal.toFixed(2)}`}
                   </button>
                 ) : (
                   <div className="space-y-4">
                     <div className="text-center">
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">Complete Payment</h3>
-                      <p className="text-gray-600">Order #{currentOrder?.order_number} created successfully</p>
+                      <p className="text-gray-600">Complete your payment to finalize the order</p>
                     </div>
                     <PayPalScriptProvider 
                       options={{ 
                         "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "AfHSkix_NSicMTTLJJRJzB1Msfkv6HSaihJw5auKM0fD00O8PztAquoYThZsV0sIM5ncMBQU-DQiz826",
                         currency: "GBP",
-                        "enable-funding": "venmo,paylater,card",
-                        "disable-funding": "",
+                        "enable-funding": "venmo,card",
+                        "disable-funding": "paylater",
                         "data-sdk-integration-source": "integrationbuilder"
                       }}
                     >
@@ -337,9 +344,10 @@ export default function CheckoutPage() {
                                 'Authorization': `Bearer ${localStorage.getItem('authToken')}`
                               },
                               body: JSON.stringify({
-                                order_number: currentOrder.order_number,
                                 amount: finalTotal,
-                                currency: 'GBP'
+                                currency: 'GBP',
+                                cart_items: cartItems,
+                                shipping_info: formData
                               })
                             })
                             

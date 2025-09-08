@@ -29,12 +29,17 @@ def create_paypal_order(request):
     """Create a PayPal order for payment processing"""
     try:
         # Get order data from request
-        order_number = request.data.get('order_number')
         amount = request.data.get('amount')
         currency = request.data.get('currency', 'GBP')
+        cart_items = request.data.get('cart_items', [])
+        shipping_info = request.data.get('shipping_info', {})
         
-        if not order_number or not amount:
-            return Response({'error': 'Order number and amount are required'}, status=status.HTTP_400_BAD_REQUEST)
+        if not amount:
+            return Response({'error': 'Amount is required'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Generate a temporary order reference for PayPal
+        import uuid
+        temp_order_ref = f"temp-{uuid.uuid4().hex[:8]}"
         
         # Get access token
         access_token = _get_paypal_access_token()
@@ -44,14 +49,14 @@ def create_paypal_order(request):
         headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {access_token}",
-            "PayPal-Request-Id": f"order-{order_number}-{timezone.now().timestamp()}"
+            "PayPal-Request-Id": f"order-{temp_order_ref}-{timezone.now().timestamp()}"
         }
         
         payload = {
             "intent": "CAPTURE",
             "purchase_units": [{
-                "reference_id": order_number,
-                "invoice_id": order_number,  # This is what we'll use in webhook
+                "reference_id": temp_order_ref,
+                "invoice_id": temp_order_ref,  # This is what we'll use in webhook
                 "amount": {
                     "currency_code": currency,
                     "value": str(amount)
@@ -77,7 +82,7 @@ def create_paypal_order(request):
         
         return Response({
             'paypal_order_id': paypal_order['id'],
-            'order_number': order_number,
+            'temp_order_ref': temp_order_ref,
             'approve_url': next(link['href'] for link in paypal_order['links'] if link['rel'] == 'approve')
         })
         

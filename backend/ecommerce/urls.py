@@ -1,4 +1,4 @@
-from .views_paypal import paypal_webhook
+from .views_paypal import paypal_webhook, create_paypal_order, capture_paypal_order
 from .views_csrf import get_csrf
 """
 URL configuration for ecommerce project.
@@ -74,7 +74,9 @@ api_v1_patterns = [
     path('newsletter/subscribe/', orders_views.newsletter_subscribe, name='newsletter_subscribe'),
     path('newsletter/unsubscribe/', orders_views.newsletter_unsubscribe, name='newsletter_unsubscribe'),
     path('auth/csrf/', get_csrf),
-    path('payments/webhook/', paypal_webhook),]
+    path('payments/webhook/', paypal_webhook),
+    path('payments/create-order/', create_paypal_order),
+    path('payments/capture-order/', capture_paypal_order),]
 
 urlpatterns = [
     path('admin/', admin.site.urls),

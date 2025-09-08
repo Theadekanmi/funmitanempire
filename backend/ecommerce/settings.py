@@ -139,6 +139,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://www.funmitanempire.uk",
     "http://127.0.0.1:3000",
     "http://localhost:3000",
+    "http://127.0.0.1:3001",
+    "http://localhost:3001",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -149,6 +151,8 @@ CSRF_TRUSTED_ORIGINS = [
     "https://www.funmitanempire.uk",
     "http://127.0.0.1:3000",
     "http://localhost:3000",
+    "http://127.0.0.1:3001",
+    "http://localhost:3001",
 ]
 
 # REST Framework settings
@@ -205,9 +209,15 @@ FRONTEND_URL = os.getenv('FRONTEND_URL', 'https://funmitanempire.uk')
 AUTH_USER_MODEL = 'accounts.User'
 
 # PayPal Settings
-PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID', 'sandbox_client_id')  # Replace with real client ID
-PAYPAL_CLIENT_SECRET = os.getenv('PAYPAL_CLIENT_SECRET', 'sandbox_secret')  # Replace with real secret
-PAYPAL_MODE = os.getenv('PAYPAL_MODE', 'sandbox')
+# Mode: 'live' or 'sandbox'
+PAYPAL_MODE = os.getenv('PAYPAL_MODE', 'live')
+
+# Live credentials provided
+PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID', 'AfHSkix_NSicMTTLJJRJzB1Msfkv6HSaihJw5auKM0fD00O8PztAquoYThZsV0sIM5ncMBQU-DQiz826')
+PAYPAL_CLIENT_SECRET = os.getenv('PAYPAL_CLIENT_SECRET', 'EFRZWhvzAcSDuE2g8ktRtY_GWjLDe258lletbwgjLLWLhGIVpIO0mIK6_TNseVXOeYotVAhoSaD2Soa1')
+
+# Webhook ID
+PAYPAL_WEBHOOK_ID = os.getenv('PAYPAL_WEBHOOK_ID', '01V64993EE393873J')
 
 # Security Settings
 SECURE_BROWSER_XSS_FILTER = True

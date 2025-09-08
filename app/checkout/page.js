@@ -6,6 +6,7 @@ import { useCart } from '@/hooks/useCart'
 import { useRouter } from 'next/navigation'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js'
 import toast from 'react-hot-toast'
 
 export default function CheckoutPage() {
@@ -13,6 +14,8 @@ export default function CheckoutPage() {
   const { cartItems, total, clearCart } = useCart()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [orderCreated, setOrderCreated] = useState(false)
+  const [currentOrder, setCurrentOrder] = useState(null)
   const [formData, setFormData] = useState({
     full_name: '',
     email: '',
@@ -100,7 +103,7 @@ export default function CheckoutPage() {
     setLoading(true)
     
     try {
-              const response = await fetch('/api/v1/orders/create_from_cart/', {
+      const response = await fetch('/api/v1/orders/create_from_cart/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -111,9 +114,9 @@ export default function CheckoutPage() {
 
       if (response.ok) {
         const order = await response.json()
-        await clearCart()
-        toast.success('Order placed successfully!')
-        router.push(`/orders`)
+        setCurrentOrder(order)
+        setOrderCreated(true)
+        toast.success('Order created! Please complete payment.')
       } else {
         const errorData = await response.json()
         toast.error(errorData.error || 'Failed to place order')
@@ -123,6 +126,42 @@ export default function CheckoutPage() {
     } finally {
       setLoading(false)
     }
+  }
+
+  const handlePayPalSuccess = async (details, data) => {
+    try {
+      const response = await fetch('/api/v1/payments/capture-order/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify({
+          paypal_order_id: data.orderID,
+          order_number: currentOrder.order_number
+        })
+      })
+
+      if (response.ok) {
+        await clearCart()
+        toast.success('Payment successful! Order confirmed.')
+        router.push(`/orders`)
+      } else {
+        const errorData = await response.json()
+        toast.error(errorData.error || 'Payment capture failed')
+      }
+    } catch (error) {
+      toast.error('Payment processing error. Please contact support.')
+    }
+  }
+
+  const handlePayPalError = (error) => {
+    console.error('PayPal error:', error)
+    toast.error('Payment failed. Please try again.')
+  }
+
+  const handlePayPalCancel = () => {
+    toast.error('Payment cancelled')
   }
 
   if (!isAuthenticated || cartItems.length === 0) {
@@ -265,13 +304,69 @@ export default function CheckoutPage() {
                   />
                 </div>
                 
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full bg-orange-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-orange-700 transition-colors disabled:opacity-50"
-                >
-                  {loading ? 'Processing...' : `Place Order - £${finalTotal.toFixed(2)}`}
-                </button>
+                {!orderCreated ? (
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-orange-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-orange-700 transition-colors disabled:opacity-50"
+                  >
+                    {loading ? 'Processing...' : `Create Order - £${finalTotal.toFixed(2)}`}
+                  </button>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="text-center">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Complete Payment</h3>
+                      <p className="text-gray-600">Order #{currentOrder?.order_number} created successfully</p>
+                    </div>
+                    <PayPalScriptProvider 
+                      options={{ 
+                        "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "AfHSkix_NSicMTTLJJRJzB1Msfkv6HSaihJw5auKM0fD00O8PztAquoYThZsV0sIM5ncMBQU-DQiz826",
+                        currency: "GBP",
+                        "enable-funding": "venmo,paylater,card",
+                        "disable-funding": "",
+                        "data-sdk-integration-source": "integrationbuilder"
+                      }}
+                    >
+                      <PayPalButtons
+                        createOrder={async () => {
+                          try {
+                            const response = await fetch('/api/v1/payments/create-order/', {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                              },
+                              body: JSON.stringify({
+                                order_number: currentOrder.order_number,
+                                amount: finalTotal,
+                                currency: 'GBP'
+                              })
+                            })
+                            
+                            if (response.ok) {
+                              const data = await response.json()
+                              return data.paypal_order_id
+                            } else {
+                              throw new Error('Failed to create PayPal order')
+                            }
+                          } catch (error) {
+                            console.error('Error creating PayPal order:', error)
+                            throw error
+                          }
+                        }}
+                        onApprove={handlePayPalSuccess}
+                        onError={handlePayPalError}
+                        onCancel={handlePayPalCancel}
+                        style={{
+                          layout: 'vertical',
+                          color: 'gold',
+                          shape: 'rect',
+                          label: 'paypal'
+                        }}
+                      />
+                    </PayPalScriptProvider>
+                  </div>
+                )}
               </form>
             </div>
             

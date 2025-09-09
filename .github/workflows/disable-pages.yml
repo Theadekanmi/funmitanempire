@@ -1,0 +1,14 @@
+# This workflow is intentionally disabled
+# GitHub Pages cannot host full-stack applications (Next.js + Django)
+# This project requires a VPS/Cloud Server deployment
+name: Disabled - Full Stack App
+
+on:
+  workflow_dispatch: # Only manual trigger
+
+jobs:
+  disabled:
+    runs-on: ubuntu-latest
+    steps:
+      - name: This workflow is disabled
+        run: echo "This is a full-stack app that needs VPS deployment, not GitHub Pages"

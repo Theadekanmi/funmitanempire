@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { useCart } from '@/hooks/useCart'
 import { useRouter } from 'next/navigation'
-import Header from '@/components/layout/Header'
+ 
 import Footer from '@/components/layout/Footer'
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js'
 import toast from 'react-hot-toast'
@@ -116,7 +116,7 @@ export default function CheckoutPage() {
   const handlePayPalSuccess = async (details, data) => {
     try {
       // First create the order with payment details
-      const orderResponse = await fetch('/api/v1/orders/create_from_cart/', {
+      const orderResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000'}/api/v1/orders/create_from_cart/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -133,23 +133,23 @@ export default function CheckoutPage() {
         const order = await orderResponse.json()
         
         // Then capture the payment
-        const captureResponse = await fetch('/api/v1/payments/capture-order/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-          },
+        const captureResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000'}/api/v1/payments/capture-order/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
           body: JSON.stringify({
             paypal_order_id: data.orderID,
             order_number: order.order_number
           })
-        })
+      })
 
         if (captureResponse.ok) {
-          await clearCart()
+        await clearCart()
           toast.success('Payment successful! Order confirmed.')
-          router.push(`/orders`)
-        } else {
+        router.push(`/orders`)
+      } else {
           const errorData = await captureResponse.json()
           toast.error(errorData.error || 'Payment capture failed')
         }
@@ -177,9 +177,8 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 relative z-10">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
           
@@ -312,13 +311,13 @@ export default function CheckoutPage() {
                 </div>
                 
                 {!orderCreated ? (
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full bg-orange-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-orange-700 transition-colors disabled:opacity-50"
-                  >
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-orange-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-orange-700 transition-colors disabled:opacity-50"
+                >
                     {loading ? 'Processing...' : `Proceed to Payment - £${finalTotal.toFixed(2)}`}
-                  </button>
+                </button>
                 ) : (
                   <div className="space-y-4">
                     <div className="text-center">
@@ -327,7 +326,7 @@ export default function CheckoutPage() {
                     </div>
                     <PayPalScriptProvider 
                       options={{ 
-                        "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "AfHSkix_NSicMTTLJJRJzB1Msfkv6HSaihJw5auKM0fD00O8PztAquoYThZsV0sIM5ncMBQU-DQiz826",
+                        "client-id": "AQBtovYnxj_Trrc4QcaA_VfIPy1Lpg3iB8NLKD9iRtSIBodiJdH248JrMpFKHk9zY8k-Qb0iSQ9FOFAW",
                         currency: "GBP",
                         "enable-funding": "venmo,card",
                         "disable-funding": "paylater",
@@ -337,7 +336,7 @@ export default function CheckoutPage() {
                       <PayPalButtons
                         createOrder={async () => {
                           try {
-                            const response = await fetch('/api/v1/payments/create-order/', {
+                            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000'}/api/v1/payments/create-order/`, {
                               method: 'POST',
                               headers: {
                                 'Content-Type': 'application/json',

@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$2y$10$abcdefghijklmnopqrstuvwxyz1234567890'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '203.161.60.101', 'funmitanempire.uk', 'www.funmitanempire.uk']
 
@@ -141,6 +141,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3001",
     "http://localhost:3001",
+    "http://127.0.0.1:3002",
+    "http://localhost:3002",
+    "http://127.0.0.1:3003",
+    "http://localhost:3003",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -153,6 +157,10 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3001",
     "http://localhost:3001",
+    "http://127.0.0.1:3002",
+    "http://localhost:3002",
+    "http://127.0.0.1:3003",
+    "http://localhost:3003",
 ]
 
 # REST Framework settings
@@ -212,12 +220,19 @@ AUTH_USER_MODEL = 'accounts.User'
 # Mode: 'live' or 'sandbox'
 PAYPAL_MODE = os.getenv('PAYPAL_MODE', 'live')
 
-# Live credentials provided
-PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID', 'AWne6DgWVYrBTeIZ2jY6oX_INjEQqj-513CBAUdXaVPXpc6q1LiBq92qPNB43x7k5vOOidDSuVZy5OZ0')
-PAYPAL_CLIENT_SECRET = os.getenv('PAYPAL_CLIENT_SECRET', 'EKS_Wi2F6twe4X2nlfVxwjEnEJU7krw3_uoMvnk11HLD1QjmGr4isbnney9-LWqU-kLDv_3X_4inNxI0')
+# PayPal credentials - use environment variables
+PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID')
+PAYPAL_CLIENT_SECRET = os.getenv('PAYPAL_CLIENT_SECRET')
+PAYPAL_WEBHOOK_ID = os.getenv('PAYPAL_WEBHOOK_ID')
 
-# Webhook ID
-PAYPAL_WEBHOOK_ID = os.getenv('PAYPAL_WEBHOOK_ID', '01V64993EE393873J')
+# Only validate in production (when DEBUG=False)
+if not DEBUG:
+    if not PAYPAL_CLIENT_ID:
+        raise ValueError("PAYPAL_CLIENT_ID environment variable is required in production")
+    if not PAYPAL_CLIENT_SECRET:
+        raise ValueError("PAYPAL_CLIENT_SECRET environment variable is required in production")
+    if not PAYPAL_WEBHOOK_ID:
+        raise ValueError("PAYPAL_WEBHOOK_ID environment variable is required in production")
 
 # Security Settings
 SECURE_BROWSER_XSS_FILTER = True
@@ -244,27 +259,24 @@ if not DEBUG:
 
 # Rate Limiting (for production)
 # Install django-ratelimit: pip install django-ratelimit
-CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_HTTPONLY = False
-CSRF_COOKIE_SAMESITE = 'Lax'
-SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_DOMAIN = '.funmitanempire.uk'
-SESSION_COOKIE_DOMAIN = '.funmitanempire.uk'
-CSRF_COOKIE_DOMAIN = '.funmitanempire.uk'
-SESSION_COOKIE_DOMAIN = '.funmitanempire.uk'
-CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_HTTPONLY = False
-CSRF_COOKIE_SAMESITE = 'Lax'
-SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE = 'Lax'
 
 # --- CSRF/Session cookie config (final override) ---
 CSRF_COOKIE_NAME = 'csrftoken'
-CSRF_COOKIE_DOMAIN = '.funmitanempire.uk'
-SESSION_COOKIE_DOMAIN = '.funmitanempire.uk'
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+
+# Cookie settings based on environment
+if DEBUG:
+    # Local development
+    CSRF_COOKIE_DOMAIN = None
+    SESSION_COOKIE_DOMAIN = None
+    CSRF_COOKIE_SECURE = False
+    SESSION_COOKIE_SECURE = False
+else:
+    # Production
+    CSRF_COOKIE_DOMAIN = '.funmitanempire.uk'
+    SESSION_COOKIE_DOMAIN = '.funmitanempire.uk'
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+
 CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_SAMESITE = 'Lax'

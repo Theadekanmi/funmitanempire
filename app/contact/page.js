@@ -8,7 +8,7 @@ import ContactForm from '@/components/contact/ContactForm'
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      
       
       <main>
         {/* Hero Section */}

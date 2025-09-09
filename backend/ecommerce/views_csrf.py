@@ -1,15 +1,29 @@
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
+from django.conf import settings
 
 def get_csrf(request):
     token = get_token(request)
     resp = JsonResponse({"detail": "ok"})
-    resp.set_cookie(
-        "csrftoken",
-        token,
-        domain=".funmitanempire.uk",
-        secure=True,
-        samesite="Lax",
-        httponly=False,
-    )
+    
+    # Set cookie based on environment
+    if settings.DEBUG:
+        # Local development - no domain restriction
+        resp.set_cookie(
+            "csrftoken",
+            token,
+            secure=False,
+            samesite="Lax",
+            httponly=False,
+        )
+    else:
+        # Production - domain restricted
+        resp.set_cookie(
+            "csrftoken",
+            token,
+            domain=".funmitanempire.uk",
+            secure=True,
+            samesite="Lax",
+            httponly=False,
+        )
     return resp

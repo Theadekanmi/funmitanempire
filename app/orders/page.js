@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { useRouter } from 'next/navigation'
-import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import toast from 'react-hot-toast'
 
@@ -108,7 +107,7 @@ export default function OrdersPage() {
   if (authLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header />
+        
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mx-auto mb-4"></div>
@@ -124,7 +123,7 @@ export default function OrdersPage() {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header />
+        
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-2xl font-bold mb-4">Please Sign In</h1>
@@ -144,7 +143,6 @@ export default function OrdersPage() {
 
   return (
     <div className="min-h-screen">
-      <Header />
       
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">

@@ -8,7 +8,7 @@ import ProductGrid from '@/components/products/ProductGrid';
 export default function FabricsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      
       <CategoryBanner 
         title="Fabrics Collection"
         description="High-quality fabrics for custom designs and traditional wear"

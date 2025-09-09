@@ -8,6 +8,7 @@ import { CartProvider } from '@/hooks/useCart'
 import { WishlistProvider } from '@/hooks/useWishlist'
 import CookieConsent from '@/components/gdpr/CookieConsent'
 import DebugConsole from '@/components/debug/DebugConsole'
+import Header from '@/components/layout/Header'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,13 +23,9 @@ export default function RootLayout({ children }) {
         <meta name="robots" content="index, follow" />
         <meta name="language" content="English" />
         <meta name="revisit-after" content="7 days" />
-        
-        {/* Favicon */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
-        
-        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://funmitanempire.com/" />
         <meta property="og:title" content="Funmitan Empire - African Fashion & Fabrics" />
@@ -38,27 +35,17 @@ export default function RootLayout({ children }) {
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="Funmitan Empire Limited" />
         <meta property="og:locale" content="en_GB" />
-        
-        {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content="https://funmitanempire.com/" />
         <meta name="twitter:title" content="Funmitan Empire - African Fashion & Fabrics" />
         <meta name="twitter:description" content="Discover authentic African fashion, premium fabrics, and ready-made designs. Free delivery to Manchester and UK mainland £50+." />
         <meta name="twitter:image" content="https://funmitanempire.com/logos.jpg" />
-        
-        {/* Additional SEO */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#dd6b20" />
         <meta name="msapplication-TileColor" content="#dd6b20" />
-        
-        {/* Canonical URL */}
         <link rel="canonical" href="https://funmitanempire.com/" />
-        
-        {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
-        {/* Structured Data for SEO */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -69,17 +56,8 @@ export default function RootLayout({ children }) {
               "url": "https://funmitanempire.com",
               "logo": "https://funmitanempire.com/logos.jpg",
               "description": "African fashion wear for women, teens, and men. Quality fabrics, gele, and ready-made designs.",
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Manchester",
-                "addressCountry": "GB"
-              },
-              "contactPoint": {
-                "@type": "ContactPoint",
-                "telephone": "+44 7368369348",
-                "contactType": "customer service",
-                "email": "funmitanempire@gmail.com"
-              },
+              "address": { "@type": "PostalAddress", "addressLocality": "Manchester", "addressCountry": "GB" },
+              "contactPoint": { "@type": "ContactPoint", "telephone": "+44 7368369348", "contactType": "customer service", "email": "funmitanempire@gmail.com" },
               "sameAs": [
                 "https://facebook.com/funmitanempire",
                 "https://instagram.com/funmitanempire",
@@ -93,16 +71,9 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <CartProvider>
             <WishlistProvider>
+              <Header />
               {children}
-              <Toaster 
-                position="top-right"
-                toastOptions={{
-                  duration: 4000,
-                  className: 'text-sm font-medium',
-                  success: { style: { background: '#10b981', color: 'white' } },
-                  error: { style: { background: '#ef4444', color: 'white' } },
-                }}
-              />
+              <Toaster position="top-right" toastOptions={{ duration: 4000, className: 'text-sm font-medium', success: { style: { background: '#10b981', color: 'white' } }, error: { style: { background: '#ef4444', color: 'white' } } }} />
               <CookieConsent />
               <DebugConsole />
             </WishlistProvider>

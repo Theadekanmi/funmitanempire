@@ -11,7 +11,7 @@ export const metadata = {
 export default function HelpPage() {
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      
       
       <main className="section-padding">
         <div className="container-custom">

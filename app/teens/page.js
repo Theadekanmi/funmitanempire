@@ -9,7 +9,7 @@ import ProductGrid from '@/components/products/ProductGrid';
 export default function TeensPage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      
       <CategoryBanner 
         title="Teens Collection"
         description="Trendy and fashionable styles for teenagers"

@@ -55,7 +55,7 @@ export default function AccountSettingsPage() {
   if (authLoading) {
     return (
       <div className="min-h-screen bg-white">
-        <Header />
+        
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mx-auto mb-4"></div>
@@ -71,7 +71,7 @@ export default function AccountSettingsPage() {
   if (!authLoading && !isAuthenticated) {
     return (
       <div className="min-h-screen bg-white">
-        <Header />
+        
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-2xl font-bold mb-4">Please Sign In</h1>
@@ -121,7 +121,7 @@ export default function AccountSettingsPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      
       
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">

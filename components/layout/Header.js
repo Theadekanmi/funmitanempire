@@ -36,7 +36,8 @@ export default function Header() {
   ]
 
   return (
-    <header className="fixed top-0 left-0 right-0 md:static z-50 bg-white shadow-sm border-b border-gray-200">
+    <>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm border-b border-gray-200">
       <InitCsrf />
       {/* Top banner */}
       <div className="bg-orange-600 text-white text-center py-2 text-sm">
@@ -191,5 +192,6 @@ export default function Header() {
         )}
       </div>
     </header>
+    </>
   )
 }

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { useCart } from '@/hooks/useCart'
 import { getImageUrl } from '@/utils/api'
@@ -22,7 +21,7 @@ export default function CartPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-white">
-        <Header />
+        
         <main className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-4 border-gray-200 border-t-orange-600 mx-auto mb-4"></div>
@@ -36,7 +35,6 @@ export default function CartPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
       
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">

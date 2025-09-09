@@ -8,7 +8,7 @@ import ProductGrid from '@/components/products/ProductGrid';
 export default function MenPage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      
       <CategoryBanner 
         title="Men's Collection"
         description="Stylish and comfortable fashion for the modern man"

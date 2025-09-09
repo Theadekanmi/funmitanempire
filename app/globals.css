@@ -59,12 +59,15 @@ body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   line-height: 1.5;
   color: #1f2937;
+  padding-top: 120px;
 }
 
 /* Smooth scrolling and sticky header support */
 html { scroll-behavior: smooth; }
-header { position: sticky; top: 0; z-index: 50; }
-main, .section-padding { scroll-margin-top: 72px; }
+/* No forced sticky header; pages control their own layout */
+header { position: fixed; z-index: 50; }
+/* Remove forced scroll margin */
+main, .section-padding { scroll-margin-top: 0; }
 
 /* Ensure containers work */
   .container {
@@ -84,5 +87,6 @@ main, .section-padding { scroll-margin-top: 72px; }
   html { scroll-behavior: smooth; }
 
   @media (max-width: 767px) {
-    body { padding-top: 4rem; }
+    /* No global padding on mobile */
+    body { padding-top: 120px; }
   }

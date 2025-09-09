@@ -9,7 +9,7 @@ import ProductGrid from '@/components/products/ProductGrid'
 export default function ProductsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      
       <CategoryBanner 
         title="All Products"
         description="Discover our complete collection of premium African fashion, fabrics, and accessories"

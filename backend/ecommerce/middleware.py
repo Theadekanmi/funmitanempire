@@ -50,8 +50,5 @@ class SecurityHeadersMiddleware:
         if not settings.DEBUG:
             # Strict Transport Security
             response['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains; preload'
-            
-            # Secure cookies
-            response['Set-Cookie'] = response.get('Set-Cookie', '') + '; Secure; SameSite=Strict'
         
         return response

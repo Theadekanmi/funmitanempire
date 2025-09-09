@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import ProductGrid from '@/components/products/ProductGrid'
 import CategoryBanner from '@/components/products/CategoryBanner'
@@ -132,9 +131,8 @@ const categoryInfo = {
 export default function SalePage() {
   return (
     <div className="min-h-screen bg-white">
-      <Header />
       
-      <main>
+      <main className="pt-4">
         {/* Sale Banner */}
         <section className="bg-gradient-to-r from-red-600 via-pink-600 to-purple-600 text-white py-4">
           <div className="container-custom">

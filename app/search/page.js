@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
-import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import ProductCard from '@/components/products/ProductCard'
 import { products } from '@/utils/api'
@@ -41,7 +40,6 @@ export default function SearchPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">

@@ -8,7 +8,7 @@ import ProductGrid from '@/components/products/ProductGrid';
 export default function GelePage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      
       <CategoryBanner 
         title="Gele Collection"
         description="Traditional head wraps and accessories for special occasions"

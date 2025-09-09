@@ -1,7 +1,12 @@
 // utils/http.js
 import axios from 'axios';
 
-export const api = axios.create({ withCredentials: true });
+const BACKEND_ORIGIN = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000';
+
+export const api = axios.create({ 
+  baseURL: `${BACKEND_ORIGIN}/api/v1`,
+  withCredentials: true 
+});
 
 api.interceptors.request.use((config) => {
   config.headers = config.headers || {};
@@ -11,5 +16,9 @@ api.interceptors.request.use((config) => {
 });
 
 export async function ensureCsrf() {
-  try { await api.get('/api/v1/auth/csrf/'); } catch {}
+  try { 
+    await api.get('/auth/csrf/'); 
+  } catch (error) {
+    console.log('CSRF token fetch failed:', error);
+  }
 }

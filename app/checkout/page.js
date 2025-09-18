@@ -339,8 +339,7 @@ export default function CheckoutPage() {
                             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000'}/api/v1/payments/create-order/`, {
                               method: 'POST',
                               headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                                'Content-Type': 'application/json'
                               },
                               body: JSON.stringify({
                                 amount: finalTotal,
@@ -352,7 +351,7 @@ export default function CheckoutPage() {
                             
                             if (response.ok) {
                               const data = await response.json()
-                              return data.paypal_order_id
+                              return data.id
                             } else {
                               throw new Error('Failed to create PayPal order')
                             }

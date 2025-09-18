@@ -25,4 +25,6 @@ nextjs.log
 .env
 .env.local
 .env.production
-.env.development
+.env.developmentbackend/db.sqlite3
+backend/__pycache__/
+backend/**/__pycache__/

@@ -272,10 +272,10 @@ if DEBUG:
     SESSION_COOKIE_SECURE = False
 else:
     # Production
-CSRF_COOKIE_DOMAIN = '.funmitanempire.uk'
-SESSION_COOKIE_DOMAIN = '.funmitanempire.uk'
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_DOMAIN = '.funmitanempire.uk'
+    SESSION_COOKIE_DOMAIN = '.funmitanempire.uk'
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
 
 CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = 'Lax'

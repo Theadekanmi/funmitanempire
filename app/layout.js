@@ -9,6 +9,7 @@ import { WishlistProvider } from '@/hooks/useWishlist'
 import CookieConsent from '@/components/gdpr/CookieConsent'
 import DebugConsole from '@/components/debug/DebugConsole'
 import Header from '@/components/layout/Header'
+import CsrfInit from '@/components/CsrfInit'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -71,6 +72,7 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <CartProvider>
             <WishlistProvider>
+              <CsrfInit />
               <Header />
               {children}
               <Toaster position="top-right" toastOptions={{ duration: 4000, className: 'text-sm font-medium', success: { style: { background: '#10b981', color: 'white' } }, error: { style: { background: '#ef4444', color: 'white' } } }} />

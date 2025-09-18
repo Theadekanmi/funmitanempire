@@ -49,9 +49,23 @@ apiClient.interceptors.response.use(
   }
 )
 
+// Ensure CSRF token is available
+async function ensureCsrfToken() {
+  if (typeof document !== 'undefined' && !document.cookie.includes('csrftoken=')) {
+    try {
+      await apiClient.get('/auth/csrf/')
+    } catch (error) {
+      console.warn('Failed to fetch CSRF token:', error)
+    }
+  }
+}
+
 // Generic API request function
 async function apiRequest(endpoint, options = {}) {
   try {
+    // Ensure CSRF token is available before making requests
+    await ensureCsrfToken()
+    
     const response = await apiClient({
       url: endpoint,
       ...options,
@@ -64,6 +78,9 @@ async function apiRequest(endpoint, options = {}) {
     throw error
   }
 }
+
+// Export CSRF function for manual initialization
+export { ensureCsrfToken }
 
 // Auth API
 export const auth = {

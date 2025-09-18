@@ -1,5 +1,5 @@
 'use client'
-import InitCsrf from '@/components/InitCsrf'
+import CsrfInit from '@/components/CsrfInit'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
@@ -38,7 +38,7 @@ export default function Header() {
   return (
     <>
     <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm border-b border-gray-200">
-      <InitCsrf />
+      <CsrfInit />
       {/* Top banner */}
       <div className="bg-orange-600 text-white text-center py-2 text-sm">
         🚚 FREE delivery: Manchester (any amount) | UK mainland £50+ | 📞 Call us: +447368369348

@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.utils import timezone
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 import json, sys, hmac, hashlib, base64, requests
@@ -24,7 +24,8 @@ def _get_paypal_access_token():
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@csrf_exempt
+@permission_classes([AllowAny])
 def create_paypal_order(request):
     """Create a PayPal order for payment processing"""
     try:
@@ -71,7 +72,8 @@ def create_paypal_order(request):
                 "payment_method": {
                     "payer_selected": "PAYPAL",
                     "payee_preferred": "IMMEDIATE_PAYMENT_REQUIRED"
-                }
+                },
+                "shipping_preference": "NO_SHIPPING"
             }
         }
         
@@ -81,9 +83,11 @@ def create_paypal_order(request):
         paypal_order = response.json()
         
         return Response({
+            'id': paypal_order['id'],
             'paypal_order_id': paypal_order['id'],
             'temp_order_ref': temp_order_ref,
-            'approve_url': next(link['href'] for link in paypal_order['links'] if link['rel'] == 'approve')
+            'status': paypal_order['status'],
+            'approve_url': next((link['href'] for link in paypal_order['links'] if link['rel'] == 'approve'), None)
         })
         
     except requests.exceptions.RequestException as e:
@@ -95,7 +99,8 @@ def create_paypal_order(request):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@csrf_exempt
+@permission_classes([AllowAny])
 def capture_paypal_order(request):
     """Capture a PayPal order after approval"""
     try:
@@ -167,6 +172,7 @@ def _verify_paypal_webhook_signature(transmission_id, timestamp, webhook_id, eve
     return resp.json().get('verification_status') == 'SUCCESS'
 
 @csrf_exempt
+@permission_classes([AllowAny])
 def paypal_webhook(request):
     try:
         body_text = request.body.decode("utf-8") if request.body else "{}"

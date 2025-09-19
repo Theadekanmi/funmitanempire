@@ -102,43 +102,62 @@ def create_paypal_order(request):
 @csrf_exempt
 @permission_classes([AllowAny])
 def capture_paypal_order(request):
-    """Capture a PayPal order after approval"""
+    """Capture a PayPal order after approval and create the order"""
     try:
         paypal_order_id = request.data.get('paypal_order_id')
-        order_number = request.data.get('order_number')
-        
-        if not paypal_order_id or not order_number:
-            return Response({'error': 'PayPal order ID and order number are required'}, status=status.HTTP_400_BAD_REQUEST)
-        
+        shipping_info = request.data.get('shipping_info', {})
+
+        if not paypal_order_id:
+            return Response({'error': 'PayPal order ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+
         # Get access token
         access_token = _get_paypal_access_token()
-        
+
         # Capture the order
         url = f"{_get_paypal_api_base()}/v2/checkout/orders/{paypal_order_id}/capture"
         headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {access_token}"
         }
-        
+
         response = requests.post(url, headers=headers, json={}, timeout=10)
         response.raise_for_status()
-        
+
         capture_result = response.json()
-        
+
         if capture_result['status'] == 'COMPLETED':
-            # Mark order as paid
-            from orders.views import mark_order_paid
-            mark_order_paid(request, order_number)
-            
-            return Response({
-                'status': 'success',
-                'order_number': order_number,
-                'paypal_order_id': paypal_order_id,
-                'capture_id': capture_result['purchase_units'][0]['payments']['captures'][0]['id']
-            })
+            # Now create the order from cart data after payment is confirmed
+            try:
+                # Get the authenticated user
+                user = request.user
+                if not user.is_authenticated:
+                    return Response({'error': 'User not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)
+
+                # Import the order creation function
+                from orders.views import create_order_from_cart_internal
+                
+                # Create order data with payment info
+                order_data = {
+                    **shipping_info,
+                    'paypal_order_id': paypal_order_id,
+                    'payment_status': 'completed'
+                }
+
+                # Create the order now that payment is confirmed
+                order = create_order_from_cart_internal(user, order_data)
+                
+                return Response({
+                    'status': 'success',
+                    'order_number': order.order_number,
+                    'paypal_order_id': paypal_order_id,
+                    'capture_id': capture_result['purchase_units'][0]['payments']['captures'][0]['id']
+                })
+            except Exception as order_error:
+                print(f"Order creation error: {order_error}", file=sys.stdout, flush=True)
+                return Response({'error': f'Order creation failed: {str(order_error)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response({'error': 'Payment capture failed'}, status=status.HTTP_400_BAD_REQUEST)
-            
+
     except requests.exceptions.RequestException as e:
         print(f"PayPal capture error: {e}", file=sys.stdout, flush=True)
         return Response({'error': 'Payment capture failed'}, status=status.HTTP_503_SERVICE_UNAVAILABLE)

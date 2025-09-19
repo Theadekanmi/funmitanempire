@@ -115,50 +115,31 @@ export default function CheckoutPage() {
 
   const handlePayPalSuccess = async (details, data) => {
     try {
-      // First create the order with payment details
-      const orderResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000'}/api/v1/orders/create_from_cart/`, {
+      // Only capture the payment - order will be created by webhook after payment confirmed
+      const captureResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://funmitanempire.uk'}/api/v1/payments/capture-order/`, {
         method: 'POST',
         headers: {
+          "X-CSRFToken": document.cookie.split("; ").find(row => row.startsWith("csrftoken="))?.split("=")[1] || "",
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`
         },
         body: JSON.stringify({
-          ...formData,
           paypal_order_id: data.orderID,
-          payment_status: 'completed'
+          shipping_info: formData
         })
       })
 
-      if (orderResponse.ok) {
-        const order = await orderResponse.json()
-        
-        // Then capture the payment
-        const captureResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000'}/api/v1/payments/capture-order/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-        },
-          body: JSON.stringify({
-            paypal_order_id: data.orderID,
-            order_number: order.order_number
-          })
-      })
-
-        if (captureResponse.ok) {
+      if (captureResponse.ok) {
+        const captureResult = await captureResponse.json()
         await clearCart()
-          toast.success('Payment successful! Order confirmed.')
-        router.push(`/orders`)
+        // Redirect to success page
+        router.push(`/checkout/success?order=${captureResult.order_number}`)
       } else {
-          const errorData = await captureResponse.json()
-          toast.error(errorData.error || 'Payment capture failed')
-        }
-      } else {
-        const errorData = await orderResponse.json()
-        toast.error(errorData.error || 'Failed to create order')
+        throw new Error('Payment capture failed')
       }
     } catch (error) {
-      toast.error('Payment processing error. Please contact support.')
+      console.error('PayPal payment error:', error)
+      alert('Payment failed. Please try again.')
     }
   }
 

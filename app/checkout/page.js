@@ -327,6 +327,7 @@ export default function CheckoutPage() {
                     <PayPalScriptProvider 
                       options={{ 
                         "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
+                        "merchant-id": "WTWT4YVUN855Q",
                         currency: "GBP",
                         "enable-funding": "venmo,card",
                         "disable-funding": "paylater",

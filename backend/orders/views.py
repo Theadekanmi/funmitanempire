@@ -12,6 +12,90 @@ from .serializers import (
 )
 
 
+def create_order_from_cart_internal(user, order_data):
+    """
+    Internal function to create order from cart data.
+    Used by both API views and PayPal capture.
+    """
+    # Get user's cart
+    cart = Cart.objects.filter(user=user).first()
+    if not cart or not cart.items.exists():
+        raise ValueError('Cart is empty')
+    
+    print(f"🔍 create_order_from_cart_internal called by user: {user}")
+    print(f"🔍 Order data: {order_data}")
+    print(f"🔍 Cart: {cart}, Items count: {cart.items.count()}")
+    
+    # Log each cart item
+    for item in cart.items.all():
+        print(f"   - Cart item: {item.product.name} x{item.quantity} @ £{item.product.current_price}")
+    
+    # Create order
+    print("🔍 Creating order...")
+    with transaction.atomic():
+        order = Order.objects.create(
+            user=user,
+            full_name=order_data.get('full_name'),
+            email=order_data.get('email'),
+            phone=order_data.get('phone'),
+            address=order_data.get('address'),
+            city=order_data.get('city'),
+            postal_code=order_data.get('postal_code'),
+            country=order_data.get('country'),
+            subtotal=0,  # Will be calculated after items are added
+            shipping_cost=0,  # Will be calculated after items are added
+            total_amount=0,  # Will be calculated after items are added
+            notes=order_data.get('notes', ''),
+            payment_status=order_data.get('payment_status', 'pending')
+        )
+        print(f"✅ Order created: {order.order_number}")
+        
+        # Create order items
+        print("🔍 Creating order items...")
+        for cart_item in cart.items.all():
+            try:
+                # Use safe price calculation
+                try:
+                    product_price = cart_item.product.current_price
+                    print(f"   - Using current_price: £{product_price}")
+                except Exception as e:
+                    # Fallback to regular price if current_price fails
+                    product_price = cart_item.product.price
+                    print(f"   - Using fallback price: £{product_price} (error: {e})")
+                
+                order_item = OrderItem.objects.create(
+                    order=order,
+                    product=cart_item.product,
+                    quantity=cart_item.quantity,
+                    price=product_price,
+                    size=cart_item.size,
+                    color=cart_item.color
+                )
+                print(f"   ✅ Order item created: {order_item.id}")
+                
+            except Exception as e:
+                print(f"   ❌ Error creating order item: {e}")
+                import traceback
+                traceback.print_exc()
+                raise e
+        
+        # Calculate accurate totals based on items and shipping
+        order.update_totals()
+        order.save()
+        
+        # Now send the order confirmation email (after totals are calculated)
+        try:
+            order.send_order_confirmation_email()
+            print(f"✅ Order confirmation email sent to {order.email}")
+        except Exception as e:
+            print(f"❌ Failed to send order confirmation email: {e}")
+        
+        # Clear cart
+        cart.items.all().delete()
+        
+        return order
+
+
 def get_or_create_cart(request):
     """Get or create cart for user or session"""
     if request.user.is_authenticated:

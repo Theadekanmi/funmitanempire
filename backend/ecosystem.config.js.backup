@@ -1,0 +1,18 @@
+module.exports = {
+  apps: [{
+    name: 'django-backend',
+    script: '/var/www/funmitan/backend/venv/bin/gunicorn',
+    interpreter: '/var/www/funmitan/backend/venv/bin/python',
+    args: '--bind 0.0.0.0:8000 --workers 3 ecommerce.wsgi:application',
+    cwd: '/var/www/funmitan/backend',
+    env: {
+      PAYPAL_CLIENT_ID: 'AQBtovYnxj_Trrc4QcaA_VfIPy1Lpg3iB8NLKD9iRtSIBodiJdH248JrMpFKHk9zY8k-Qb0iSQ9FOFAW',
+      PAYPAL_CLIENT_SECRET: 'ELL6Y5ayHHADpsrp527MqRm9_t6GB-CNz3ymqjbUqRuf052JhWWFMmiDobVfGelFc80TAmTd56UbQEiX',
+      PAYPAL_WEBHOOK_ID: '9145334871911082N',
+      PAYPAL_MODE: 'live',
+      DEBUG: 'False',
+      SECRET_KEY: 'your_secret_key_here',
+      ALLOWED_HOSTS: 'funmitanempire.uk,www.funmitanempire.uk'
+    }
+  }]
+}

@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Footer from '@/components/layout/Footer'
 import ProductCard from '@/components/products/ProductCard'
 import { products } from '@/utils/api'
 import Link from 'next/link'
@@ -146,7 +145,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Footer />
     </div>
   )
 }

@@ -16,9 +16,9 @@ User = get_user_model()
 def create_test_order():
     try:
         # Get the user
-        user = User.objects.filter(email='ashleyriley475@gmail.com').first()
+        user = User.objects.first()  # Get any user instead of hardcoded email
         if not user:
-            print("❌ User not found: ashleyriley475@gmail.com")
+            print("❌ No users found in database")
             return
         
         # Get a product (any product)

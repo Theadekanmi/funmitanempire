@@ -447,7 +447,7 @@ Message:
 
 Submitted at: {contact_instance.created_at}
 
-Please login to the admin panel to reply: http://203.161.60.101:8000/admin/orders/contact/
+Please login to the admin panel to reply: https://funmitanempire.uk/admin/orders/contact/
             """
             
             send_mail(
@@ -583,7 +583,7 @@ def mark_order_paid(request, order_number):
             f"Payment received for order #{order.order_number}.\n"
             f"Customer: {order.full_name} ({order.email})\n"
             f"Total: £{order.total_amount}\n"
-            f"View admin: http://203.161.60.101:8000/admin/orders/order/"
+            f"View admin: https://funmitanempire.uk/admin/orders/order/"
         )
         send_mail(
             subject=admin_subject,

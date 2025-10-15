@@ -19,7 +19,7 @@ def main():
     
     # Get the user
     try:
-        user = User.objects.get(email='ashleyriley475@gmail.com')
+        user = User.objects.first()  # Get any user instead of hardcoded email
         print(f"✅ Found user: {user.email}")
     except User.DoesNotExist:
         print("❌ User not found: ashleyriley475@gmail.com")

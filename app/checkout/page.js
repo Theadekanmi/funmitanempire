@@ -11,7 +11,7 @@ import toast from 'react-hot-toast'
 
 export default function CheckoutPage() {
   const { user, isAuthenticated } = useAuth()
-  const { cartItems, total, clearCart } = useCart()
+  const { cartItems, totalAmount, clearCart } = useCart()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [orderCreated, setOrderCreated] = useState(false)
@@ -114,9 +114,36 @@ export default function CheckoutPage() {
   }
 
   const handlePayPalSuccess = async (details, data) => {
+    console.log('🔍 PayPal onApprove data:', data)
+    console.log('🔍 PayPal onApprove details:', details)
+    
     try {
-      // Only capture the payment - order will be created by webhook after payment confirmed
-      const captureResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://funmitanempire.uk'}/api/v1/payments/capture-order/`, {
+      // Step 1: Create order from cart first (before clearing cart)
+      const orderResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://funmitanempire.uk/api'}/v1/orders/create_from_cart/`, {
+        method: 'POST',
+        headers: {
+          "X-CSRFToken": document.cookie.split("; ").find(row => row.startsWith("csrftoken="))?.split("=")[1] || "",
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify({
+          ...formData,
+          paypal_order_id: data.orderID,
+          payment_status: 'pending' // Will be updated after capture
+        })
+      })
+
+      if (!orderResponse.ok) {
+        const errorData = await orderResponse.json().catch(() => ({}))
+        console.error('Order creation failed:', errorData)
+        throw new Error(errorData?.error || 'Failed to create order')
+      }
+
+      const order = await orderResponse.json()
+      console.log('✅ Order created:', order.order_number)
+
+      // Step 2: Capture the PayPal payment
+      const captureResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://funmitanempire.uk/api'}/v1/payments/capture-order/`, {
         method: 'POST',
         headers: {
           "X-CSRFToken": document.cookie.split("; ").find(row => row.startsWith("csrftoken="))?.split("=")[1] || "",
@@ -125,31 +152,76 @@ export default function CheckoutPage() {
         },
         body: JSON.stringify({
           paypal_order_id: data.orderID,
+          order_number: order.order_number,
           shipping_info: formData
         })
       })
 
-      if (captureResponse.ok) {
-        const captureResult = await captureResponse.json()
+      const captureResult = await captureResponse.json().catch(() => ({}))
+      console.log('🔍 Capture result:', captureResult)
+      
+      // Check if payment was successful
+      if (captureResponse.ok || 
+          captureResult?.status === 'COMPLETED' || 
+          captureResult?.paypal?.status === 'COMPLETED' ||
+          captureResult?.message?.includes('already captured') ||
+          captureResult?.message?.includes('Order already captured')) {
+        
+        console.log('✅ Payment successful, clearing cart')
         await clearCart()
+        toast.success('Payment successful! Order confirmed.')
+        
         // Redirect to success page
-        router.push(`/checkout/success?order=${captureResult.order_number}`)
+        router.push(`/checkout/success?order=${order.order_number}`)
       } else {
-        throw new Error('Payment capture failed')
+        console.error('❌ Payment capture failed:', captureResult)
+        
+        // Show specific error message if available
+        const errorMessage = captureResult?.error || 
+                            captureResult?.message || 
+                            'Payment capture failed. Please try again.'
+        
+        toast.error(errorMessage)
+        throw new Error(errorMessage)
       }
     } catch (error) {
-      console.error('PayPal payment error:', error)
-      alert('Payment failed. Please try again.')
+      console.error('❌ PayPal payment error:', error)
+      
+      // Show user-friendly error message
+      const errorMessage = error.message || 'Payment processing failed. Please try again.'
+      toast.error(errorMessage)
+      
+      // Don't use alert, use toast for better UX
+      // alert('Payment failed. Please try again.')
     }
   }
 
   const handlePayPalError = (error) => {
-    console.error('PayPal error:', error)
-    toast.error('Payment failed. Please try again.')
+    console.error('❌ PayPal error:', error)
+    
+    // Show specific error message based on error type
+    let errorMessage = 'Payment failed. Please try again.'
+    
+    if (error?.message) {
+      if (error.message.includes('INSTRUMENT_DECLINED')) {
+        errorMessage = 'Payment declined. Please try a different payment method or contact your bank.'
+      } else if (error.message.includes('INSUFFICIENT_FUNDS')) {
+        errorMessage = 'Insufficient funds. Please try a different payment method.'
+      } else if (error.message.includes('EXPIRED_CARD')) {
+        errorMessage = 'Card expired. Please use a different payment method.'
+      } else if (error.message.includes('INVALID_ACCOUNT_NUMBER')) {
+        errorMessage = 'Invalid card number. Please check your card details.'
+      } else {
+        errorMessage = error.message
+      }
+    }
+    
+    toast.error(errorMessage)
   }
 
   const handlePayPalCancel = () => {
-    toast.error('Payment cancelled')
+    console.log('🔍 PayPal payment cancelled by user')
+    toast.error('Payment cancelled. You can try again when ready.')
   }
 
   if (!isAuthenticated || cartItems.length === 0) {
@@ -318,13 +390,13 @@ export default function CheckoutPage() {
                       <PayPalButtons
                         createOrder={async () => {
                           try {
-                            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://127.0.0.1:8000'}/api/v1/payments/create-order/`, {
+                            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://funmitanempire.uk/api'}/v1/payments/create-order/`, {
                               method: 'POST',
                               headers: {
                                 'Content-Type': 'application/json'
                               },
                               body: JSON.stringify({
-                                amount: finalTotal,
+                                amount: parseFloat(finalTotal.toFixed(2)),
                                 currency: 'GBP',
                                 cart_items: cartItems,
                                 shipping_info: formData

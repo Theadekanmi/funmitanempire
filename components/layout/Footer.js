@@ -99,9 +99,20 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm">
-              © {currentYear} Funmitan Empire Limited. All rights reserved.
-            </p>
+            <div className="text-gray-400 text-sm">
+              <p>© {currentYear} Funmitan Empire Limited. All rights reserved.</p>
+              <p className="mt-1">
+                Website designed & developed by{' '}
+                <a 
+                  href="https://prowebnigeria.ng" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-orange-400 hover:text-orange-300 transition-colors font-medium"
+                >
+                  ProWeb Nigeria
+                </a>
+              </p>
+            </div>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="https://www.facebook.com/share/1AHGWcKrWq/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-500 transition-colors">
                 <span className="sr-only">Facebook</span>

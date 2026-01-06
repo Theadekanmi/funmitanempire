@@ -5,7 +5,6 @@ import { useAuth } from '@/hooks/useAuth'
 import { useCart } from '@/hooks/useCart'
 import { useRouter } from 'next/navigation'
  
-import Footer from '@/components/layout/Footer'
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js'
 import toast from 'react-hot-toast'
 
@@ -143,7 +142,7 @@ export default function CheckoutPage() {
       console.log('✅ Order created:', order.order_number)
 
       // Step 2: Capture the PayPal payment
-      const captureResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://funmitanempire.uk/api'}/v1/payments/capture-order/`, {
+      const captureResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://funmitanempire.uk'}/api/v1/payments/capture-order/`, {
         method: 'POST',
         headers: {
           "X-CSRFToken": document.cookie.split("; ").find(row => row.startsWith("csrftoken="))?.split("=")[1] || "",
@@ -390,7 +389,7 @@ export default function CheckoutPage() {
                       <PayPalButtons
                         createOrder={async () => {
                           try {
-                            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://funmitanempire.uk/api'}/v1/payments/create-order/`, {
+                            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://funmitanempire.uk'}/api/v1/payments/create-order/`, {
                               method: 'POST',
                               headers: {
                                 'Content-Type': 'application/json'
@@ -483,8 +482,6 @@ export default function CheckoutPage() {
           </div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   )
 }

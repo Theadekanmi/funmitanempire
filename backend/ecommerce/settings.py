@@ -5,9 +5,13 @@ Django settings for ecommerce project.
 from pathlib import Path
 from datetime import timedelta
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env file
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
@@ -19,7 +23,7 @@ SECRET_KEY = 'django-insecure-$2y$10$abcdefghijklmnopqrstuvwxyz1234567890'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '203.161.60.101', 'funmitanempire.uk', 'www.funmitanempire.uk']
+ALLOWED_HOSTS = ['104.207.65.52', '127.0.0.1', 'localhost', 'funmitanempire.uk', 'www.funmitanempire.uk']
 
 
 # Application definition

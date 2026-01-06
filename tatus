@@ -1,5 +1,0 @@
-[33m037f94c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Fix navigation overlap, PayPal integration, and mobile responsiveness
-[33m27c6b6c[m chore(paypal): update live PayPal credentials (client id/secret)
-[33m8792ab6[m Fix PayPal checkout flow: remove Pay Later, fix order creation timing, update backend API
-[33m1d2b6ec[m Add PayPal checkout integration with webhook handling and guest checkout support
-[33mf4cfa63[m[33m ([m[1;32mbackup/local-before-reset[m[33m)[m Chore: add .gitignore and remove venv/build/logs from repo

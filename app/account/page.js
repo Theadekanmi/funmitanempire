@@ -1,6 +1,5 @@
 'use client';
 
-import Footer from '@/components/layout/Footer';
 import AccountContent from '@/components/account/AccountContent';
 
 export default function AccountPage() {
@@ -16,7 +15,6 @@ export default function AccountPage() {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 }

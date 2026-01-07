@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
 
 export default function ReturnsExchangePage() {
   return (
@@ -189,8 +187,6 @@ export default function ReturnsExchangePage() {
           </div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   );
 }

@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 
 export default function ResetPasswordPage() {
   const searchParams = useSearchParams()
@@ -89,8 +87,8 @@ export default function ResetPasswordPage() {
             <p className="text-gray-600">Loading...</p>
           </div>
         </div>
-        <Footer />
       </div>
+    </div>
     )
   }
 
@@ -158,7 +156,6 @@ export default function ResetPasswordPage() {
           )}
         </div>
       </div>
-      <Footer />
     </div>
   )
 }

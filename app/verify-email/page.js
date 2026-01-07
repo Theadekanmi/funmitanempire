@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 import { toast } from 'react-hot-toast'
 import { auth } from '@/utils/api'
 
@@ -171,7 +169,6 @@ export default function VerifyEmailPage() {
           )}
         </div>
       </div>
-      <Footer />
     </div>
   )
 }

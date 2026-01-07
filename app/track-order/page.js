@@ -1,8 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 
 export default function TrackOrderPage() {
   const [orderNumber, setOrderNumber] = useState('')
@@ -137,8 +135,6 @@ export default function TrackOrderPage() {
           )}
         </div>
       </main>
-      
-      <Footer />
     </div>
   )
 }

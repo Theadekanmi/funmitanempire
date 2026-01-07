@@ -1,8 +1,6 @@
 'use client'
 
 import React from 'react'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 import ContactForm from '@/components/contact/ContactForm'
 
 export default function ContactPage() {
@@ -200,8 +198,6 @@ export default function ContactPage() {
           </div>
         </section>
       </main>
-      
-      <Footer />
     </div>
   )
 }

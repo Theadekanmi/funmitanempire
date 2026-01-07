@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import Footer from '@/components/layout/Footer'
 import ProductGrid from '@/components/products/ProductGrid'
 import CategoryBanner from '@/components/products/CategoryBanner'
 
@@ -215,8 +214,6 @@ export default function SalePage() {
           </div>
         </section>
       </main>
-      
-      <Footer />
     </div>
   )
 }

@@ -1,6 +1,4 @@
 import React from 'react'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 
 export const metadata = {
   title: 'About Us - Meet CEO Racheal Oluwafunmilayo Odekanle',
@@ -228,8 +226,6 @@ export default function AboutPage() {
           </div>
         </section>
       </main>
-      
-      <Footer />
     </div>
   )
 }

@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { useRouter } from 'next/navigation'
-import Footer from '@/components/layout/Footer'
 import toast from 'react-hot-toast'
 
 export default function OrdersPage() {
@@ -114,7 +113,6 @@ export default function OrdersPage() {
             <p className="text-gray-600">Loading...</p>
           </div>
         </div>
-        <Footer />
       </div>
     )
   }
@@ -136,7 +134,6 @@ export default function OrdersPage() {
             </button>
           </div>
         </div>
-        <Footer />
       </div>
     )
   }
@@ -322,8 +319,6 @@ export default function OrdersPage() {
           )}
         </div>
       </div>
-
-      <Footer />
     </div>
   )
 }

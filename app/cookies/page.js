@@ -1,6 +1,4 @@
 import React from 'react'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 
 export const metadata = {
   title: 'Cookie Policy - How We Use Cookies',
@@ -151,8 +149,6 @@ export default function CookiesPage() {
           </div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   )
 }

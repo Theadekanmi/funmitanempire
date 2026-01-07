@@ -1,7 +1,5 @@
 'use client'
 
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 import ProductGrid from '@/components/products/ProductGrid'
 
 export default function TrendingPage() {
@@ -109,8 +107,6 @@ export default function TrendingPage() {
           </div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   )
 }

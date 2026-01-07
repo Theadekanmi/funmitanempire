@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
-import Footer from '@/components/layout/Footer'
 import ProductCard from '@/components/products/ProductCard'
 import { products } from '@/utils/api'
 
@@ -96,8 +95,6 @@ export default function SearchPage() {
           </div>
         )}
       </main>
-
-      <Footer />
     </div>
   )
 }

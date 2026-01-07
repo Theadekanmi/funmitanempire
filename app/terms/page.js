@@ -1,6 +1,4 @@
 import React from 'react'
- 
-import Footer from '@/components/layout/Footer'
 
 export const metadata = {
   title: 'Terms of Service - Website Terms & Conditions',
@@ -145,8 +143,6 @@ export default function TermsPage() {
           </div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   )
 }

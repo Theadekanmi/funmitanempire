@@ -1,6 +1,4 @@
 import React from 'react'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 
 export const metadata = {
   title: 'Help & Customer Support - Get Assistance',
@@ -185,8 +183,6 @@ export default function HelpPage() {
           </div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   )
 }

@@ -1,6 +1,4 @@
 import React from 'react'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 
 export const metadata = {
   title: 'Shipping & Delivery Information - Funmitan Empire Limited',
@@ -201,8 +199,6 @@ export default function ShippingPage() {
           </div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   )
 }

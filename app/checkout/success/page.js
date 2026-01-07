@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 import toast from 'react-hot-toast'
 
 export default function CheckoutSuccessPage() {
@@ -64,8 +62,6 @@ export default function CheckoutSuccessPage() {
           </div>
         </div>
       </div>
-      
-      <Footer />
     </div>
   )
 }

@@ -2,8 +2,6 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 import toast from 'react-hot-toast'
 
 export default function CheckoutCancelPage() {
@@ -51,8 +49,6 @@ export default function CheckoutCancelPage() {
           </div>
         </div>
       </div>
-      
-      <Footer />
     </div>
   )
 }

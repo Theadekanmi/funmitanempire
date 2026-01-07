@@ -1,8 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 
 export default function UnsubscribePage() {
   const [email, setEmail] = useState('')
@@ -122,8 +120,6 @@ export default function UnsubscribePage() {
           </div>
         </div>
       </main>
-      
-      <Footer />
     </div>
   )
 }

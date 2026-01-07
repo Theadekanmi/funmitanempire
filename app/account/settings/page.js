@@ -3,8 +3,6 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import { useRouter } from 'next/navigation'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 import toast from 'react-hot-toast'
 
 export default function AccountSettingsPage() {
@@ -62,7 +60,6 @@ export default function AccountSettingsPage() {
             <p className="text-gray-600">Loading...</p>
           </div>
         </div>
-        <Footer />
       </div>
     )
   }
@@ -84,7 +81,6 @@ export default function AccountSettingsPage() {
             </button>
           </div>
         </div>
-        <Footer />
       </div>
     )
   }
@@ -382,8 +378,6 @@ export default function AccountSettingsPage() {
           </div>
         </div>
       </div>
-      
-      <Footer />
     </div>
   )
 }

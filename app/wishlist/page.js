@@ -1,8 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 import ProductCard from '@/components/products/ProductCard'
 import { useAuth } from '@/hooks/useAuth'
 import { wishlist } from '@/utils/api'
@@ -64,8 +62,6 @@ export default function WishlistPage() {
             </Link>
           </div>
         </main>
-
-        <Footer />
       </div>
     )
   }
@@ -116,8 +112,6 @@ export default function WishlistPage() {
           </div>
         )}
       </main>
-
-      <Footer />
     </div>
   )
 }

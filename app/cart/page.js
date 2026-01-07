@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Footer from '@/components/layout/Footer'
 import { useCart } from '@/hooks/useCart'
 import { getImageUrl } from '@/utils/api'
 import Link from 'next/link'
@@ -28,7 +27,6 @@ export default function CartPage() {
             <p className="text-gray-600">Loading your cart...</p>
           </div>
         </main>
-        <Footer />
       </div>
     )
   }
@@ -224,8 +222,6 @@ export default function CartPage() {
           </div>
         )}
       </main>
-
-      <Footer />
     </div>
   )
 }

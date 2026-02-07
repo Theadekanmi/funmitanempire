@@ -18,6 +18,31 @@ export default function Header() {
   const { totalItems } = useCart()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [categories, setCategories] = useState([])
+
+  // Fetch categories from API
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://funmitanempire.uk'}/api/v1/categories/`)
+        if (response.ok) {
+          const data = await response.json()
+          setCategories(data.results || data)
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error)
+        // Fallback to hardcoded if API fails
+        setCategories([
+          { name: 'Women', slug: 'women' },
+          { name: 'Men', slug: 'men' },
+          { name: 'Teens', slug: 'teens' },
+          { name: 'Fabrics', slug: 'fabrics' },
+          { name: 'Gele', slug: 'gele' },
+        ])
+      }
+    }
+    fetchCategories()
+  }, [])
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -26,14 +51,16 @@ export default function Header() {
     }
   }
 
-  const navigation = [
-    { name: 'Women', href: '/women' },
-    { name: 'Men', href: '/men' },
-    { name: 'Teens', href: '/teens' },
-    { name: 'Fabrics', href: '/fabrics' },
-    { name: 'Gele', href: '/gele' },
-    { name: 'Sale', href: '/sale' },
-  ]
+  // Build navigation from categories
+  const navigation = categories.map(cat => ({
+    name: cat.name,
+    href: `/${cat.slug}`
+  }))
+  
+  // Add Sale at the end
+  if (navigation.length > 0) {
+    navigation.push({ name: 'Sale', href: '/sale' })
+  }
 
   return (
     <>

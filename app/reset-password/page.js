@@ -80,7 +80,6 @@ export default function ResetPasswordPage() {
   if (!token && !error) {
     return (
       <div className="min-h-screen bg-white">
-        
         <div className="min-h-screen flex items-center justify-center bg-gray-50">
           <div className="bg-white p-8 rounded-lg shadow-md max-w-md w-full text-center">
             <h1 className="text-2xl font-bold mb-4">Reset Password</h1>
@@ -88,13 +87,11 @@ export default function ResetPasswordPage() {
           </div>
         </div>
       </div>
-    </div>
     )
   }
 
   return (
     <div className="min-h-screen bg-white">
-      
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="bg-white p-8 rounded-lg shadow-md max-w-md w-full">
           <h1 className="text-2xl font-bold text-center mb-6">Reset Your Password</h1>

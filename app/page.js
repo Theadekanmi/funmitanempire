@@ -7,6 +7,7 @@ import Link from 'next/link'
 
 export default function HomePage() {
   const [featuredProducts, setFeaturedProducts] = useState([])
+  const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -23,7 +24,20 @@ export default function HomePage() {
       }
     }
 
+    const loadCategories = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://funmitanempire.uk'}/api/v1/categories/`)
+        if (response.ok) {
+          const data = await response.json()
+          setCategories(data.results || data)
+        }
+      } catch (error) {
+        console.error('Error loading categories:', error)
+      }
+    }
+
     loadFeaturedProducts()
+    loadCategories()
   }, [])
 
   return (
@@ -62,26 +76,42 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">Shop by Category</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {[
-              { name: 'Women', href: '/women', emoji: '👗' },
-              { name: 'Men', href: '/men', emoji: '👔' },
-              { name: 'Teens', href: '/teens', emoji: '👕' },
-              { name: 'Fabrics', href: '/fabrics', emoji: '🧵' },
-              { name: 'Gele', href: '/gele', emoji: '👑' },
-              { name: 'Trending', href: '/trending', emoji: '🔥' },
-              { name: 'Sale', href: '/sale', emoji: '🏷️' },
-            ].map((category) => (
-              <Link
-                key={category.name}
-                href={category.href}
-                className="group bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center hover:shadow-md transition-shadow"
-              >
-                <div className="text-4xl mb-3">{category.emoji}</div>
-                <h3 className="font-semibold text-gray-900 group-hover:text-orange-600 transition-colors">
-                  {category.name}
-                </h3>
-              </Link>
-            ))}
+            {categories.map((category) => {
+              // Map category names to emojis
+              const emojiMap = {
+                'women': '👗',
+                'men': '👔',
+                'teens': '👕',
+                'fabrics': '🧵',
+                'gele': '👑',
+                'trending': '🔥',
+                'bubu-gown': '👘',
+                'kids-bubu-gown': '👶',
+              }
+              
+              return (
+                <Link
+                  key={category.id}
+                  href={`/${category.slug}`}
+                  className="group bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center hover:shadow-md transition-shadow"
+                >
+                  <div className="text-4xl mb-3">{emojiMap[category.slug] || '🛍️'}</div>
+                  <h3 className="font-semibold text-gray-900 group-hover:text-orange-600 transition-colors">
+                    {category.name}
+                  </h3>
+                </Link>
+              )
+            })}
+            {/* Add Sale card at the end */}
+            <Link
+              href="/sale"
+              className="group bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center hover:shadow-md transition-shadow"
+            >
+              <div className="text-4xl mb-3">🏷️</div>
+              <h3 className="font-semibold text-gray-900 group-hover:text-orange-600 transition-colors">
+                Sale
+              </h3>
+            </Link>
           </div>
         </div>
       </section>

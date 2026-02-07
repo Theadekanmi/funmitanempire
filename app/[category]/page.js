@@ -40,7 +40,7 @@ export default function DynamicCategoryPage({ params }) {
     },
     'kids-bubu-gown': {
       title: "Kids Bubu Gown",
-      description: "Made with Ankara 100% cotton. From ages 5 to ages 13"
+      description: "Beautiful Bubu Gowns for kids, made with premium 100% Ankara cotton"
     },
     'sale': {
       title: "Sale Items",
